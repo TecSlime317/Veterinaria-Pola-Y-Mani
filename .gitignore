@@ -1,2 +1,2 @@
-#ignora mi conexion a la base de datos
+# tecprime: Evita incluir en Git el archivo local de conexión y su configuración sensible.
 /php/conexion.php

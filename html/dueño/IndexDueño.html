@@ -1,0 +1,49 @@
+<!-- tecprime: Documento que muestra los registros de dueños consultados desde PHP. -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- tecprime: Configura la codificación, la adaptación a pantallas y el título de la sección. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dueños - Veterinaria Pola y Maní</title>
+</head>
+<body>
+    <!-- tecprime: Muestra el título del panel y el enlace para volver al inicio. -->
+    <h1>Administración de Dueños</h1>
+    <a href="../../index.html">Volver al inicio</a>
+
+    <!-- tecprime: Define las columnas de información y el cuerpo que recibirá las filas desde PHP. -->
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Edad</th>
+                <th>Teléfono</th>
+                <th>Correo electrónico</th>
+                <th>Dirección</th>
+                <th>Ciudad</th>
+                <th>Fecha de inscripción</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="tablaDuenos">
+        </tbody>
+    </table>
+
+    <!-- tecprime: Solicita al endpoint PHP las filas de dueños y las inserta en el cuerpo de la tabla. -->
+    <script>
+        // tecprime: Solicita al servidor el HTML de las filas de dueños.
+        fetch('../../php/dueño/consultasDueño.php')
+            // tecprime: Convierte la respuesta HTTP a texto HTML.
+            .then(function (respuesta) {
+                return respuesta.text();
+            })
+            // tecprime: Inserta las filas recibidas en el cuerpo de la tabla.
+            .then(function (filas) {
+                document.getElementById('tablaDuenos').innerHTML = filas;
+            });
+    </script>
+</body>
+</html>
