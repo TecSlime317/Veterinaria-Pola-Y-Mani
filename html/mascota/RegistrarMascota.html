@@ -1,0 +1,92 @@
+<!-- tecprime: Pantalla "Registrar mascota": formulario para dar de alta una mascota nueva. Se llega desde el botón "+ Añadir" de la lista de mascotas. -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- tecprime: Configura la codificación, la adaptación a pantallas y el título de la sección. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar mascota - Veterinaria Pola y Maní</title>
+
+    <!-- tecprime: Enlaza la hoja de estilos compartida (dos niveles arriba: ../../). -->
+    <link rel="stylesheet" href="../../css/index.css">
+</head>
+<body>
+    <main class="contenedor">
+
+        <!-- tecprime: Título de la pantalla con huellitas decorativas. -->
+        <header class="encabezado">
+            <h1>
+                <span class="huella" aria-hidden="true">🐾</span>
+                Registrar mascota
+                <span class="huella" aria-hidden="true">🐾</span>
+            </h1>
+        </header>
+
+        <!-- tecprime: Formulario de alta. Los nombres (atributo name) coinciden con las columnas de la tabla
+             mascota y son los que recibirá PHP en $_POST.
+             La ruta de "action" es PROVISIONAL: el archivo registrarMascota.php lo debe crear quien haga el backend.
+             No lleva campo ID porque la base de datos lo genera sola. -->
+        <form class="formulario" action="../../php/mascota/registrarMascota.php" method="post">
+
+            <!-- tecprime: Nombre de la mascota (obligatorio). -->
+            <div class="campo">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="Nombre" required>
+            </div>
+
+            <!-- tecprime: Género de la mascota. Es una lista desplegable para evitar errores de escritura.
+                 Si la base de datos guarda otros valores (por ejemplo "M" y "H"), se cambian en los "value". -->
+            <div class="campo">
+                <label for="genero">Género</label>
+                <select id="genero" name="Genero" required>
+                    <option value="" selected disabled>Selecciona...</option>
+                    <option value="Macho">Macho</option>
+                    <option value="Hembra">Hembra</option>
+                </select>
+            </div>
+
+            <!-- tecprime: Especie (perro, gato, etc.). -->
+            <div class="campo">
+                <label for="especie">Especie</label>
+                <input type="text" id="especie" name="Especie" required>
+            </div>
+
+            <!-- tecprime: Raza de la mascota. -->
+            <div class="campo">
+                <label for="raza">Raza</label>
+                <input type="text" id="raza" name="Raza">
+            </div>
+
+            <!-- tecprime: Fecha de nacimiento. El tipo "date" muestra un calendario y envía el formato AAAA-MM-DD.
+                 El atributo max impide elegir una fecha futura (se rellena con JavaScript, ver el script al final). -->
+            <div class="campo">
+                <label for="fecha">Fecha de nacimiento</label>
+                <input type="date" id="fecha" name="FechaDeNacimiento" required>
+            </div>
+
+            <!-- tecprime: Peso en kilogramos. min="0" evita negativos y step="0.01" permite dos decimales. -->
+            <div class="campo">
+                <label for="peso">Peso (kg)</label>
+                <input type="number" id="peso" name="Peso" min="0" step="0.01" required>
+            </div>
+
+            <!-- tecprime: Botones del formulario. "Reiniciar" vacía los campos, "Registrar" envía los datos
+                 y "Volver" regresa a la lista sin guardar. -->
+            <div class="acciones-formulario">
+                <button class="boton boton-secundario" type="reset">Reiniciar</button>
+                <button class="boton" type="submit">Registrar</button>
+                <a class="boton boton-secundario" href="IndexMascota.html">Volver</a>
+            </div>
+        </form>
+    </main>
+
+    <script>
+        // tecprime: Calcula la fecha de hoy en formato AAAA-MM-DD y la usa como máximo del calendario.
+        // Se toma la fecha LOCAL (no toISOString) para que no se adelante un día por la zona horaria.
+        var hoy = new Date();
+        var mes = String(hoy.getMonth() + 1).padStart(2, '0');
+        var dia = String(hoy.getDate()).padStart(2, '0');
+        document.getElementById('fecha').max = hoy.getFullYear() + '-' + mes + '-' + dia;
+    </script>
+</body>
+</html>

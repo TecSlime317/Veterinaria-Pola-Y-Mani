@@ -1,0 +1,69 @@
+<!-- tecprime: Documento que muestra el listado de citas. Todavía no existe el PHP de citas, por eso la tabla se deja lista pero vacía. -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- tecprime: Configura la codificación, la adaptación a pantallas y el título de la sección. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citas - Veterinaria Pola y Maní</title>
+
+    <!-- tecprime: Enlaza la hoja de estilos compartida. Sube dos niveles (../../) porque este archivo está en html/cita/. -->
+    <link rel="stylesheet" href="../../css/index.css">
+</head>
+<body>
+    <main class="contenedor">
+
+        <!-- tecprime: Barra superior: botón para volver al inicio (izquierda) y título (centro).
+             El elemento vacío de la derecha mantiene el título centrado en la cuadrícula de tres columnas. -->
+        <header class="barra-superior">
+            <a class="boton boton-secundario izquierda" href="../../index.html">Volver</a>
+
+            <h1>
+                <span class="huella" aria-hidden="true">🐾</span>
+                Citas
+                <span class="huella" aria-hidden="true">🐾</span>
+            </h1>
+
+            <span class="derecha"></span>
+        </header>
+
+        <!-- tecprime: Envoltorio que permite desplazar la tabla en pantallas pequeñas. -->
+        <div class="tabla-contenedor">
+            <!-- tecprime: Columnas tomadas del boceto. Cuando se cree el PHP de citas, las celdas <td> que
+                 imprima deben coincidir en número y orden con estas 5 columnas. -->
+            <table class="tabla-datos">
+                <thead>
+                    <tr>
+                        <th>ID Cliente</th>
+                        <th>ID Mascota</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <!-- tecprime: El id "tablaCitas" es el que usará el script (hoy comentado) para insertar las filas. -->
+                <tbody id="tablaCitas">
+                    <!-- tecprime: Mensaje temporal mientras no exista la consulta de citas en el servidor. -->
+                    <tr class="fila-mensaje"><td colspan="5">Aún no hay citas para mostrar.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- tecprime: PENDIENTE DE BACKEND. Cuando exista el archivo PHP que devuelve las filas de citas
+         (con el mismo formato que consultasDueño.php), se descomenta este bloque y se ajusta la ruta.
+    <script>
+        fetch('../../php/cita/consultasCitas.php')
+            .then(function (respuesta) {
+                if (!respuesta.ok) {
+                    throw new Error('Respuesta HTTP ' + respuesta.status);
+                }
+                return respuesta.text();
+            })
+            .then(function (filas) {
+                document.getElementById('tablaCitas').innerHTML = filas;
+            });
+    </script>
+    -->
+</body>
+</html>

@@ -1,0 +1,384 @@
+/* ==========================================================================
+   tecprime: Hoja de estilos compartida por TODAS las páginas del sistema.
+   Cada HTML la enlaza con una ruta relativa distinta:
+     - index.html (raíz)            -> css/index.css
+     - html/dueño/*.html, etc.      -> ../../css/index.css
+   Si una página se ve "sin estilo", lo primero que hay que revisar es esa ruta.
+   ========================================================================== */
+
+
+/* ---------- 1. VARIABLES DE COLOR Y MEDIDAS ---------- */
+/* tecprime: Aquí se definen los colores y el radio de las esquinas una sola vez.
+   Para cambiar la paleta del sitio basta con editar estos valores. */
+:root {
+    --color-fondo: #fff7ec;              /* tecprime: Fondo general de la página (crema). */
+    --color-tarjeta: #ffffff;            /* tecprime: Fondo del recuadro principal. */
+    --color-principal: #e8833a;          /* tecprime: Naranja de botones y encabezados de tabla. */
+    --color-principal-oscuro: #c96a24;   /* tecprime: Naranja oscuro para hover y títulos. */
+    --color-secundario: #2a9d8f;         /* tecprime: Verde azulado para enlaces y enfoque de campos. */
+    --color-texto: #3b2a1c;              /* tecprime: Color base del texto (café oscuro). */
+    --color-texto-suave: #7a6a58;        /* tecprime: Texto secundario (notas, campos bloqueados). */
+    --color-borde: #e6d3bd;              /* tecprime: Color de bordes y líneas divisorias. */
+    --color-peligro: #c0392b;            /* tecprime: Rojo para acciones destructivas (eliminar). */
+    --radio: 14px;                       /* tecprime: Redondeo de esquinas de recuadros. */
+}
+
+
+/* ---------- 2. REGLAS BASE ---------- */
+/* tecprime: Hace que el padding y el borde cuenten dentro del ancho de cada elemento,
+   así los recuadros no se desbordan de la pantalla. */
+* {
+    box-sizing: border-box;
+}
+
+/* tecprime: Estilo general del documento: fondo, tipografía y espacio alrededor del contenido. */
+body {
+    margin: 0;
+    padding: 24px 16px;
+    background: var(--color-fondo);
+    color: var(--color-texto);
+    font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+    line-height: 1.5;
+}
+
+
+/* ---------- 3. RECUADRO PRINCIPAL ---------- */
+/* tecprime: Recuadro blanco centrado que contiene el contenido de cada pantalla
+   (equivale al "marco" dibujado en los bocetos). */
+.contenedor {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 28px 32px;
+    background: var(--color-tarjeta);
+    border: 2px solid var(--color-borde);
+    border-radius: var(--radio);
+    box-shadow: 0 6px 18px rgba(120, 80, 30, 0.12);
+}
+
+/* tecprime: Variante más estrecha para pantallas con formularios (actualizar, leer, registrar). */
+.contenedor-angosto {
+    max-width: 760px;
+}
+
+
+/* ---------- 4. ENCABEZADOS ---------- */
+/* tecprime: Bloque de título centrado (usado en el index y en los formularios). */
+.encabezado {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* tecprime: Título principal de cada pantalla, con tamaño que se adapta al ancho. */
+.encabezado h1,
+.barra-superior h1 {
+    margin: 0;
+    color: var(--color-principal-oscuro);
+    font-size: clamp(1.5rem, 4vw, 2.3rem);
+}
+
+/* tecprime: Texto de apoyo debajo del título. */
+.subtitulo {
+    margin: 6px 0 0;
+    color: var(--color-texto-suave);
+}
+
+/* tecprime: Huellitas decorativas a los lados del título (son emojis, no imágenes,
+   por eso no hace falta ningún archivo extra). Se inclinan en sentidos opuestos. */
+.huella {
+    display: inline-block;
+    margin: 0 0.35em;
+    transform: rotate(-15deg);
+}
+
+.huella:last-child {
+    transform: rotate(15deg);
+}
+
+/* tecprime: Barra superior de las pantallas de listado:
+   [botón izquierdo] [título centrado] [botón derecho]. */
+.barra-superior {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.barra-superior .izquierda {
+    justify-self: start;
+}
+
+.barra-superior .derecha {
+    justify-self: end;
+}
+
+.barra-superior h1 {
+    text-align: center;
+}
+
+
+/* ---------- 5. BOTONES ---------- */
+/* tecprime: Estilo base de botones. Sirve tanto para <a> (navegación) como para <button>
+   (enviar formularios). Se combina con una variante (.boton-secundario). */
+.boton {
+    display: inline-block;
+    padding: 0.55em 1.3em;
+    border: 2px solid var(--color-principal);
+    border-radius: 999px;
+    background: var(--color-principal);
+    color: #ffffff;
+    font: inherit;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.boton:hover {
+    background: var(--color-principal-oscuro);
+    border-color: var(--color-principal-oscuro);
+}
+
+/* tecprime: Variante "hueca" para acciones secundarias (Volver, Cancelar, Reiniciar).
+   Debe ir DESPUÉS de .boton:hover para que su hover tenga prioridad. */
+.boton-secundario {
+    background: transparent;
+    color: var(--color-principal-oscuro);
+}
+
+.boton-secundario:hover {
+    background: #fde9d6;
+    color: var(--color-principal-oscuro);
+}
+
+
+/* ---------- 6. TABLAS DE DATOS ---------- */
+/* tecprime: Envoltorio que permite desplazar la tabla horizontalmente en pantallas pequeñas
+   sin romper el diseño de toda la página. */
+.tabla-contenedor {
+    overflow-x: auto;
+    border: 1px solid var(--color-borde);
+    border-radius: 10px;
+}
+
+/* tecprime: Tabla de datos: ocupa todo el ancho y une los bordes de las celdas. */
+.tabla-datos {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.tabla-datos th,
+.tabla-datos td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--color-borde);
+    text-align: left;
+    white-space: nowrap;
+}
+
+/* tecprime: Fila de títulos de columna. */
+.tabla-datos thead th {
+    background: var(--color-principal);
+    color: #ffffff;
+}
+
+/* tecprime: Filas alternadas y resaltado al pasar el cursor, para leer mejor. */
+.tabla-datos tbody tr:nth-child(even) {
+    background: #fff3e4;
+}
+
+.tabla-datos tbody tr:hover {
+    background: #ffe8cc;
+}
+
+/* tecprime: Mensaje que ocupa toda la fila cuando no hay datos o falló la carga. */
+.tabla-datos .fila-mensaje td {
+    padding: 24px;
+    color: var(--color-texto-suave);
+    text-align: center;
+    white-space: normal;
+}
+
+/* tecprime: Variante centrada, usada en la pantalla "Leer registro". */
+.tabla-centrada th,
+.tabla-centrada td {
+    text-align: center;
+}
+
+
+/* ---------- 7. ACCIONES DENTRO DE LAS FILAS ---------- */
+/* tecprime: Los botones de cada fila NO están en el HTML: los genera PHP
+   (consultasDueño.php y consultasmascotas.php) dentro de un <details> con
+   "Opciones", y el orden es siempre Ver, Editar, Eliminar. Por eso se estilizan
+   aquí por posición. Si PHP cambia ese orden, hay que ajustar los nth-of-type. */
+.tabla-datos summary {
+    color: var(--color-secundario);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.tabla-datos details button {
+    display: block;
+    width: 100%;
+    margin-top: 6px;
+    padding: 0.35em 0.8em;
+    border: 2px solid var(--color-borde);
+    border-radius: 999px;
+    background: #ffffff;
+    color: var(--color-texto);
+    font: inherit;
+    font-size: 0.85rem;
+    text-align: left;
+    cursor: pointer;
+}
+
+.tabla-datos details button:hover {
+    background: #fde9d6;
+}
+
+/* tecprime: Iconos agregados con CSS (así el PHP no necesita cambios). */
+.tabla-datos details button:nth-of-type(1)::before { content: "📖 "; } /* Ver */
+.tabla-datos details button:nth-of-type(2)::before { content: "🔄 "; } /* Editar */
+.tabla-datos details button:nth-of-type(3)::before { content: "🗑️ "; } /* Eliminar */
+
+/* tecprime: El botón de eliminar se pinta en rojo para advertir que borra datos. */
+.tabla-datos details button:nth-of-type(3) {
+    border-color: var(--color-peligro);
+    color: var(--color-peligro);
+}
+
+.tabla-datos details button:nth-of-type(3):hover {
+    background: #fbe3e0;
+}
+
+
+/* ---------- 8. FORMULARIOS ---------- */
+/* tecprime: Los campos se acomodan en una cuadrícula que se adapta al ancho disponible:
+   en pantallas grandes quedan varios por fila y en celulares uno debajo de otro. */
+.formulario {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+/* tecprime: Un campo = etiqueta (label) arriba + control (input/select) abajo. */
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.campo label {
+    font-weight: bold;
+}
+
+.campo input,
+.campo select {
+    padding: 0.6em 0.8em;
+    border: 2px solid var(--color-borde);
+    border-radius: 10px;
+    background: #fffdf9;
+    color: var(--color-texto);
+    font: inherit;
+}
+
+/* tecprime: Resalta el campo que el usuario está escribiendo. */
+.campo input:focus,
+.campo select:focus {
+    border-color: var(--color-secundario);
+    outline: 3px solid rgba(42, 157, 143, 0.3);
+}
+
+/* tecprime: Campo de solo lectura (el ID): se ve apagado para indicar que no se puede editar. */
+.campo input[readonly] {
+    background: #f0e9df;
+    color: var(--color-texto-suave);
+    cursor: not-allowed;
+}
+
+/* tecprime: Zona de botones del formulario: ocupa toda la fila y los centra. */
+.acciones-formulario {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+/* tecprime: Nota aclaratoria que ocupa toda la fila de la cuadrícula. */
+.nota {
+    grid-column: 1 / -1;
+    margin: 0;
+    color: var(--color-texto-suave);
+    font-size: 0.85rem;
+}
+
+
+/* ---------- 9. PANTALLA DE INICIO (index.html) ---------- */
+/* tecprime: Distribución del inicio: [foto perro] [botones] [foto gato]. */
+.portada {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 28px;
+}
+
+/* tecprime: Recuadros con el perro y el gato. Son emojis grandes dentro de un marco;
+   si el equipo quiere fotos reales, se reemplaza el emoji por una etiqueta <img>. */
+.marco-mascota {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 180px;
+    height: 180px;
+    border: 3px solid var(--color-borde);
+    border-radius: var(--radio);
+    background: #fff3e4;
+    font-size: 5.5rem;
+}
+
+/* tecprime: Columna de botones del centro (Dueños, Mascotas, Citas). */
+.menu-principal {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 190px;
+}
+
+.menu-principal .boton {
+    font-size: 1.1rem;
+}
+
+
+/* ---------- 10. ADAPTACIÓN A CELULARES ---------- */
+/* tecprime: En pantallas angostas la barra superior pasa a una sola columna
+   y los botones del inicio se muestran primero, arriba de los dibujos. */
+@media (max-width: 640px) {
+    .contenedor {
+        padding: 18px 14px 24px;
+    }
+
+    .barra-superior {
+        grid-template-columns: 1fr;
+    }
+
+    .barra-superior .izquierda,
+    .barra-superior .derecha {
+        justify-self: center;
+    }
+
+    .menu-principal {
+        order: -1;
+        width: 100%;
+    }
+
+    .marco-mascota {
+        width: 130px;
+        height: 130px;
+        font-size: 4rem;
+    }
+}

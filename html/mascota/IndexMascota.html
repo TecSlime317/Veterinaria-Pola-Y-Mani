@@ -1,49 +1,130 @@
-<!-- tecprime: Documento que muestra los registros de dueños consultados desde PHP. -->
+<!-- tecprime: Documento que muestra los registros de mascotas consultados desde PHP. -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <!-- tecprime: Configura la codificación, la adaptación a pantallas y el título de la sección. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dueños - Veterinaria Pola y Maní</title>
+    <title>Mascotas - Veterinaria Pola y Maní</title>
+
+    <!-- tecprime: Enlaza la hoja de estilos compartida. Sube dos niveles (../../) porque este archivo está en html/mascota/. -->
+    <link rel="stylesheet" href="../../css/index.css">
 </head>
 <body>
-    <!-- tecprime: Muestra el título del panel y el enlace para volver al inicio. -->
-    <h1>Administración de Mascotas</h1>
-    <a href="../../index.html">Volver al inicio</a>
+    <main class="contenedor">
 
-    <!-- tecprime: Define las columnas de información y el cuerpo que recibirá las filas desde PHP. -->
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>ID Dueño</th>
-                <th>Nombre</th>
-                <th>Genero</th>
-                <th>Especie</th>
-                <th>Raza</th>
-                <th>Peso</th>
-                <th>FechaDeNacimiento</th>
-                <th>Estado</th>
-                
-            </tr>
-        </thead>
-        <tbody id="tablamascota">
-        </tbody>
-    </table>
+        <!-- tecprime: Barra superior: título (centro) y botón para añadir una mascota nueva (derecha).
+             El primer elemento vacío mantiene el título centrado en la cuadrícula de tres columnas. -->
+        <header class="barra-superior">
+            <span class="izquierda"></span>
 
-    <!-- tecprime: Solicita al endpoint PHP las filas de dueños y las inserta en el cuerpo de la tabla. -->
+            <h1>
+                <span class="huella" aria-hidden="true">🐾</span>
+                Mascotas
+                <span class="huella" aria-hidden="true">🐾</span>
+            </h1>
+
+            <!-- tecprime: Lleva al formulario para dar de alta una mascota. -->
+            <a class="boton derecha" href="RegistrarMascota.html">+ Añadir</a>
+        </header>
+
+        <!-- tecprime: Envoltorio que permite desplazar la tabla en pantallas pequeñas. -->
+        <div class="tabla-contenedor">
+            <!-- tecprime: Define las columnas de información y el cuerpo que recibirá las filas desde PHP.
+                 IMPORTANTE: estas 10 columnas deben coincidir, en número y orden, con las celdas <td>
+                 que imprime php/mascota/consultasmascotas.php. Si no coinciden, la tabla se verá desalineada. -->
+            <table class="tabla-datos">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>ID Dueño</th>
+                        <th>Nombre</th>
+                        <th>Género</th>
+                        <th>Especie</th>
+                        <th>Raza</th>
+                        <th>Peso</th>
+                        <th>Fecha de nacimiento</th>
+                        <th>Estado</th>
+                        <!-- tecprime: Esta columna faltaba: PHP genera una décima celda con el menú de acciones. -->
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <!-- tecprime: El id "tablamascota" es el que usa el script de abajo para insertar las filas. -->
+                <tbody id="tablamascota">
+                    <!-- tecprime: Mensaje temporal que se reemplaza cuando PHP responde. -->
+                    <tr class="fila-mensaje"><td colspan="10">Cargando mascotas...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- tecprime: Botón para regresar a la pantalla de inicio. -->
+        <div class="acciones-formulario">
+            <a class="boton boton-secundario" href="../../index.html">Regresar al Index</a>
+        </div>
+    </main>
+
+    <!-- tecprime: Solicita al endpoint PHP las filas de mascotas, las inserta en la tabla y atiende los botones de cada fila. -->
     <script>
-        // tecprime: Solicita al servidor el HTML de las filas de dueños.
+        // tecprime: Guarda una referencia al cuerpo de la tabla para no buscarlo varias veces.
+        var cuerpoTabla = document.getElementById('tablamascota');
+
+        // tecprime: Solicita al servidor el HTML de las filas de mascotas.
+        // NOTA: esta página debe abrirse desde un servidor con PHP (por ejemplo http://localhost/...),
+        // no con doble clic sobre el archivo, porque fetch no puede ejecutar PHP desde file://.
         fetch('../../php/mascota/consultasmascotas.php')
-            // tecprime: Convierte la respuesta HTTP a texto HTML.
+            // tecprime: Si el servidor responde con error (404, 500...), se lanza una excepción para mostrar el aviso.
             .then(function (respuesta) {
+                if (!respuesta.ok) {
+                    throw new Error('Respuesta HTTP ' + respuesta.status);
+                }
+                // tecprime: Convierte la respuesta HTTP a texto HTML.
                 return respuesta.text();
             })
             // tecprime: Inserta las filas recibidas en el cuerpo de la tabla.
             .then(function (filas) {
-                document.getElementById('tablamascota').innerHTML = filas;
+                // tecprime: Si PHP no devolvió ninguna fila, se informa que no hay registros.
+                if (filas.trim() === '') {
+                    cuerpoTabla.innerHTML = '<tr class="fila-mensaje"><td colspan="10">No hay mascotas registradas.</td></tr>';
+                } else {
+                    cuerpoTabla.innerHTML = filas;
+                }
+            })
+            // tecprime: Si algo falla (servidor apagado, ruta incorrecta, error de PHP), se muestra un aviso en la tabla.
+            .catch(function (error) {
+                cuerpoTabla.innerHTML = '<tr class="fila-mensaje"><td colspan="10">No se pudieron cargar las mascotas (' + error.message + ').</td></tr>';
             });
+
+        // tecprime: Los botones de cada fila los crea PHP DESPUÉS de cargar la página, por eso se escucha el clic
+        // en toda la tabla ("delegación de eventos") y se revisa cuál botón fue.
+        cuerpoTabla.addEventListener('click', function (evento) {
+            // tecprime: Busca el botón pulsado; si el clic no fue sobre un botón, no se hace nada.
+            var boton = evento.target.closest('button');
+            if (!boton) {
+                return;
+            }
+
+            // tecprime: La primera celda de la fila contiene el ID de la mascota (ver consultasmascotas.php).
+            var fila = boton.closest('tr');
+            var id = fila.cells[0].textContent.trim();
+
+            // tecprime: El texto del botón ("Ver", "Editar" o "Eliminar") indica qué acción se pidió.
+            var accion = boton.textContent.trim();
+
+            if (accion === 'Ver') {
+                // tecprime: PENDIENTE: todavía no existe la pantalla para leer una mascota (no tiene boceto).
+                alert('La pantalla para ver la mascota con ID ' + id + ' aún no está creada.');
+            } else if (accion === 'Editar') {
+                // tecprime: PENDIENTE: todavía no existe la pantalla para actualizar una mascota (no tiene boceto).
+                alert('La pantalla para editar la mascota con ID ' + id + ' aún no está creada.');
+            } else if (accion === 'Eliminar') {
+                // tecprime: Pide confirmación antes de borrar para evitar eliminaciones accidentales.
+                if (confirm('¿Seguro que deseas eliminar la mascota con ID ' + id + '?')) {
+                    // tecprime: PENDIENTE DE BACKEND: aquí debe llamarse al archivo PHP que elimina el registro
+                    // y luego recargar la lista con location.reload().
+                    alert('La eliminación aún no está conectada al servidor (ID ' + id + ').');
+                }
+            }
+        });
     </script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-<!-- tecprime: Documento principal que permite entrar a las secciones de administración. -->
+<!-- tecprime: Documento principal (pantalla de inicio). Desde aquí se entra a las tres secciones de administración: Dueños, Mascotas y Citas. -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,25 +6,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Veterinaria Pola y Maní</title>
+
+    <!-- tecprime: Enlaza la hoja de estilos compartida. La ruta es relativa a este archivo (raíz del proyecto). -->
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-    <!-- tecprime: Presenta el nombre del sistema y la instrucción para elegir una sección. -->
-    <h1>Bienvenido a Veterinaria Pola y Maní</h1>
-    <p>Sistema de administración. Selecciona la tabla que deseas administrar:</p>
+    <!-- tecprime: Recuadro principal que agrupa todo el contenido de la pantalla. -->
+    <main class="contenedor">
 
-    <!-- tecprime: Abre el panel de administración de dueños. -->
-    <form action="./html/dueño/IndexDueño.html">
-        <button type="submit">Dueños</button>
-    </form>
+        <!-- tecprime: Encabezado con el nombre del sistema entre dos huellitas decorativas.
+             aria-hidden="true" evita que los lectores de pantalla lean los emojis. -->
+        <header class="encabezado">
+            <h1>
+                <span class="huella" aria-hidden="true">🐾</span>
+                Veterinaria Pola y Maní
+                <span class="huella" aria-hidden="true">🐾</span>
+            </h1>
+            <p class="subtitulo">Sistema de administración. Selecciona la tabla que deseas administrar:</p>
+        </header>
 
-    <!-- tecprime: Abre el panel de administración de mascotas. -->
-    <form action="html/mascota/IndexMascota.html">
-        <button type="submit">Mascotas</button>
-    </form>
+        <!-- tecprime: Zona central con tres columnas: dibujo de perro, menú de botones y dibujo de gato. -->
+        <section class="portada">
 
-    <!-- tecprime: Abre el panel de administración de citas. -->
-    <form action="html/cita/IndexCita.html">
-        <button type="submit">Citas</button>
-    </form>
+            <!-- tecprime: Dibujo decorativo del perro (lado izquierdo). -->
+            <div class="marco-mascota" aria-hidden="true">🐶</div>
+
+            <!-- tecprime: Menú de navegación. Se usan enlaces (<a>) con aspecto de botón porque solo
+                 cambian de página; las rutas son relativas a la raíz del proyecto. -->
+            <nav class="menu-principal" aria-label="Secciones del sistema">
+                <!-- tecprime: Abre el panel de administración de dueños. -->
+                <a class="boton" href="html/dueño/IndexDueño.html">Dueños</a>
+
+                <!-- tecprime: Abre el panel de administración de mascotas. -->
+                <a class="boton" href="html/mascota/IndexMascota.html">Mascotas</a>
+
+                <!-- tecprime: Abre el panel de administración de citas. -->
+                <a class="boton" href="html/cita/IndexCita.html">Citas</a>
+            </nav>
+
+            <!-- tecprime: Dibujo decorativo del gato (lado derecho). -->
+            <div class="marco-mascota" aria-hidden="true">🐱</div>
+        </section>
+    </main>
 </body>
 </html>
