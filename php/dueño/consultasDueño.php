@@ -22,7 +22,7 @@ function obtenerDuenos()
 
     // Gael: Recupera los campos que aparecen como columnas en IndexDueño.php.
     $sql = 'SELECT ID_Dueno, Nombre, Apellidos, Edad, Telefono, CorreoElectronico, Direccion, Ciudad, FechaDeInscripcion
-            FROM Dueno';
+            FROM dueno';
     $consulta = $conexion->prepare($sql);
     $duenos = [];
     $consulta->execute();
@@ -76,7 +76,7 @@ function imprimirDetalleDueno(int $id)
     // Gael: El parámetro ? se reemplaza con el ID validado, evitando concatenarlo en la consulta SQL.
     $consulta = $conexion->prepare(
         'SELECT ID_Dueno, Nombre, Apellidos, Edad, Telefono, CorreoElectronico, Direccion, Ciudad, FechaDeInscripcion
-         FROM Dueno
+         FROM dueno
          WHERE ID_Dueno = ?'
     );
     $consulta->bind_param('i', $id);
@@ -94,7 +94,7 @@ function imprimirDetalleDueno(int $id)
     // Gael: Obtiene solo las mascotas cuya llave foránea corresponde al dueño solicitado.
     $consulta = $conexion->prepare(
         'SELECT ID_Mascota, Nombre, Genero, Especie, Raza, Peso, FechaDeNacimiento, Estado
-         FROM Mascota
+         FROM mascota
          WHERE ID_Dueno = ?
          ORDER BY ID_Mascota'
     );
@@ -107,8 +107,8 @@ function imprimirDetalleDueno(int $id)
     // LEFT JOIN conserva la cita aunque no hubiera un nombre de mascota disponible para mostrar.
     $consulta = $conexion->prepare(
         'SELECT C.ID_Cita, C.ID_Mascota, M.Nombre AS Mascota, C.Fecha, C.Hora, C.Estado
-         FROM Cita AS C
-         LEFT JOIN Mascota AS M ON M.ID_Mascota = C.ID_Mascota
+         FROM cita AS C
+         LEFT JOIN mascota AS M ON M.ID_Mascota = C.ID_Mascota
          WHERE C.ID_Dueno = ?
          ORDER BY C.Fecha, C.Hora, C.ID_Cita'
     );

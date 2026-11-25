@@ -1,6 +1,6 @@
 <?php
 // tecprime: Carga la clase compartida para obtener la conexión con la base de datos.
-require_once __DIR__ . '/../conexionejemplo.php';
+require_once __DIR__ . '/../conexion.php';
 
 // tecprime: Recupera todos los dueños con los campos que se muestran en la tabla de administración.
 function obtenerCitas() {
