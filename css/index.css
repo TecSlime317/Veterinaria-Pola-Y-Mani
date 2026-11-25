@@ -1,5 +1,5 @@
 /* ==========================================================================
-   tecprime: Hoja de estilos compartida por TODAS las páginas del sistema.
+   Peñaloza: Hoja de estilos compartida por TODAS las páginas del sistema.
    Cada HTML la enlaza con una ruta relativa distinta:
      - index.html (raíz)            -> css/index.css
      - html/dueño/*.html, etc.      -> ../../css/index.css
@@ -8,30 +8,30 @@
 
 
 /* ---------- 1. VARIABLES DE COLOR Y MEDIDAS ---------- */
-/* tecprime: Aquí se definen los colores y el radio de las esquinas una sola vez.
+/* Peñaloza: Aquí se definen los colores y el radio de las esquinas una sola vez.
    Para cambiar la paleta del sitio basta con editar estos valores. */
 :root {
-    --color-fondo: #fff7ec;              /* tecprime: Fondo general de la página (crema). */
-    --color-tarjeta: #ffffff;            /* tecprime: Fondo del recuadro principal. */
-    --color-principal: #e8833a;          /* tecprime: Naranja de botones y encabezados de tabla. */
-    --color-principal-oscuro: #c96a24;   /* tecprime: Naranja oscuro para hover y títulos. */
-    --color-secundario: #2a9d8f;         /* tecprime: Verde azulado para enlaces y enfoque de campos. */
-    --color-texto: #3b2a1c;              /* tecprime: Color base del texto (café oscuro). */
-    --color-texto-suave: #7a6a58;        /* tecprime: Texto secundario (notas, campos bloqueados). */
-    --color-borde: #e6d3bd;              /* tecprime: Color de bordes y líneas divisorias. */
-    --color-peligro: #c0392b;            /* tecprime: Rojo para acciones destructivas (eliminar). */
-    --radio: 14px;                       /* tecprime: Redondeo de esquinas de recuadros. */
+    --color-fondo: #fff7ec;              /* Peñaloza: Fondo general de la página (crema). */
+    --color-tarjeta: #ffffff;            /* Peñaloza: Fondo del recuadro principal. */
+    --color-principal: #e8833a;          /* Peñaloza: Naranja de botones y encabezados de tabla. */
+    --color-principal-oscuro: #c96a24;   /* Peñaloza: Naranja oscuro para hover y títulos. */
+    --color-secundario: #2a9d8f;         /* Peñaloza: Verde azulado para enlaces y enfoque de campos. */
+    --color-texto: #3b2a1c;              /* Peñaloza: Color base del texto (café oscuro). */
+    --color-texto-suave: #7a6a58;        /* Peñaloza: Texto secundario (notas, campos bloqueados). */
+    --color-borde: #e6d3bd;              /* Peñaloza: Color de bordes y líneas divisorias. */
+    --color-peligro: #c0392b;            /* Peñaloza: Rojo para acciones destructivas (eliminar). */
+    --radio: 14px;                       /* Peñaloza: Redondeo de esquinas de recuadros. */
 }
 
 
 /* ---------- 2. REGLAS BASE ---------- */
-/* tecprime: Hace que el padding y el borde cuenten dentro del ancho de cada elemento,
+/* Peñaloza: Hace que el padding y el borde cuenten dentro del ancho de cada elemento,
    así los recuadros no se desbordan de la pantalla. */
 * {
     box-sizing: border-box;
 }
 
-/* tecprime: Estilo general del documento: fondo, tipografía y espacio alrededor del contenido. */
+/* Peñaloza: Estilo general del documento: fondo, tipografía y espacio alrededor del contenido. */
 body {
     margin: 0;
     padding: 24px 16px;
@@ -43,7 +43,7 @@ body {
 
 
 /* ---------- 3. RECUADRO PRINCIPAL ---------- */
-/* tecprime: Recuadro blanco centrado que contiene el contenido de cada pantalla
+/* Peñaloza: Recuadro blanco centrado que contiene el contenido de cada pantalla
    (equivale al "marco" dibujado en los bocetos). */
 .contenedor {
     max-width: 1100px;
@@ -55,20 +55,20 @@ body {
     box-shadow: 0 6px 18px rgba(120, 80, 30, 0.12);
 }
 
-/* tecprime: Variante más estrecha para pantallas con formularios (actualizar, leer, registrar). */
+/* Peñaloza: Variante más estrecha para pantallas con formularios (actualizar, leer, registrar). */
 .contenedor-angosto {
     max-width: 760px;
 }
 
 
 /* ---------- 4. ENCABEZADOS ---------- */
-/* tecprime: Bloque de título centrado (usado en el index y en los formularios). */
+/* Peñaloza: Bloque de título centrado (usado en el index y en los formularios). */
 .encabezado {
     margin-bottom: 20px;
     text-align: center;
 }
 
-/* tecprime: Título principal de cada pantalla, con tamaño que se adapta al ancho. */
+/* Peñaloza: Título principal de cada pantalla, con tamaño que se adapta al ancho. */
 .encabezado h1,
 .barra-superior h1 {
     margin: 0;
@@ -76,13 +76,13 @@ body {
     font-size: clamp(1.5rem, 4vw, 2.3rem);
 }
 
-/* tecprime: Texto de apoyo debajo del título. */
+/* Peñaloza: Texto de apoyo debajo del título. */
 .subtitulo {
     margin: 6px 0 0;
     color: var(--color-texto-suave);
 }
 
-/* tecprime: Huellitas decorativas a los lados del título (son emojis, no imágenes,
+/* Peñaloza: Huellitas decorativas a los lados del título (son emojis, no imágenes,
    por eso no hace falta ningún archivo extra). Se inclinan en sentidos opuestos. */
 .huella {
     display: inline-block;
@@ -94,7 +94,7 @@ body {
     transform: rotate(15deg);
 }
 
-/* tecprime: Barra superior de las pantallas de listado:
+/* Peñaloza: Barra superior de las pantallas de listado:
    [botón izquierdo] [título centrado] [botón derecho]. */
 .barra-superior {
     display: grid;
@@ -118,7 +118,7 @@ body {
 
 
 /* ---------- 5. BOTONES ---------- */
-/* tecprime: Estilo base de botones. Sirve tanto para <a> (navegación) como para <button>
+/* Peñaloza: Estilo base de botones. Sirve tanto para <a> (navegación) como para <button>
    (enviar formularios). Se combina con una variante (.boton-secundario). */
 .boton {
     display: inline-block;
@@ -140,7 +140,7 @@ body {
     border-color: var(--color-principal-oscuro);
 }
 
-/* tecprime: Variante "hueca" para acciones secundarias (Volver, Cancelar, Reiniciar).
+/* Peñaloza: Variante "hueca" para acciones secundarias (Volver, Cancelar, Reiniciar).
    Debe ir DESPUÉS de .boton:hover para que su hover tenga prioridad. */
 .boton-secundario {
     background: transparent;
@@ -154,7 +154,7 @@ body {
 
 
 /* ---------- 6. TABLAS DE DATOS ---------- */
-/* tecprime: Envoltorio que permite desplazar la tabla horizontalmente en pantallas pequeñas
+/* Peñaloza: Envoltorio que permite desplazar la tabla horizontalmente en pantallas pequeñas
    sin romper el diseño de toda la página. */
 .tabla-contenedor {
     overflow-x: auto;
@@ -162,7 +162,7 @@ body {
     border-radius: 10px;
 }
 
-/* tecprime: Tabla de datos: ocupa todo el ancho y une los bordes de las celdas. */
+/* Peñaloza: Tabla de datos: ocupa todo el ancho y une los bordes de las celdas. */
 .tabla-datos {
     width: 100%;
     border-collapse: collapse;
@@ -177,13 +177,13 @@ body {
     white-space: nowrap;
 }
 
-/* tecprime: Fila de títulos de columna. */
+/* Peñaloza: Fila de títulos de columna. */
 .tabla-datos thead th {
     background: var(--color-principal);
     color: #ffffff;
 }
 
-/* tecprime: Filas alternadas y resaltado al pasar el cursor, para leer mejor. */
+/* Peñaloza: Filas alternadas y resaltado al pasar el cursor, para leer mejor. */
 .tabla-datos tbody tr:nth-child(even) {
     background: #fff3e4;
 }
@@ -192,7 +192,7 @@ body {
     background: #ffe8cc;
 }
 
-/* tecprime: Mensaje que ocupa toda la fila cuando no hay datos o falló la carga. */
+/* Peñaloza: Mensaje que ocupa toda la fila cuando no hay datos o falló la carga. */
 .tabla-datos .fila-mensaje td {
     padding: 24px;
     color: var(--color-texto-suave);
@@ -200,7 +200,7 @@ body {
     white-space: normal;
 }
 
-/* tecprime: Variante centrada, usada en la pantalla "Leer registro". */
+/* Peñaloza: Variante centrada, usada en la pantalla "Leer registro". */
 .tabla-centrada th,
 .tabla-centrada td {
     text-align: center;
@@ -208,7 +208,7 @@ body {
 
 
 /* ---------- 7. ACCIONES DENTRO DE LAS FILAS ---------- */
-/* tecprime: Los botones de cada fila NO están en el HTML: los genera PHP
+/* Peñaloza: Los botones de cada fila NO están en el HTML: los genera PHP
    (consultasDueño.php y consultasmascotas.php) dentro de un <details> con
    "Opciones", y el orden es siempre Ver, Editar, Eliminar. Por eso se estilizan
    aquí por posición. Si PHP cambia ese orden, hay que ajustar los nth-of-type. */
@@ -237,12 +237,12 @@ body {
     background: #fde9d6;
 }
 
-/* tecprime: Iconos agregados con CSS (así el PHP no necesita cambios). */
+/* Peñaloza: Iconos agregados con CSS (así el PHP no necesita cambios). */
 .tabla-datos details button:nth-of-type(1)::before { content: "📖 "; } /* Ver */
 .tabla-datos details button:nth-of-type(2)::before { content: "🔄 "; } /* Editar */
 .tabla-datos details button:nth-of-type(3)::before { content: "🗑️ "; } /* Eliminar */
 
-/* tecprime: El botón de eliminar se pinta en rojo para advertir que borra datos. */
+/* Peñaloza: El botón de eliminar se pinta en rojo para advertir que borra datos. */
 .tabla-datos details button:nth-of-type(3) {
     border-color: var(--color-peligro);
     color: var(--color-peligro);
@@ -254,7 +254,7 @@ body {
 
 
 /* ---------- 8. FORMULARIOS ---------- */
-/* tecprime: Los campos se acomodan en una cuadrícula que se adapta al ancho disponible:
+/* Peñaloza: Los campos se acomodan en una cuadrícula que se adapta al ancho disponible:
    en pantallas grandes quedan varios por fila y en celulares uno debajo de otro. */
 .formulario {
     display: grid;
@@ -262,7 +262,7 @@ body {
     gap: 16px;
 }
 
-/* tecprime: Un campo = etiqueta (label) arriba + control (input/select) abajo. */
+/* Peñaloza: Un campo = etiqueta (label) arriba + control (input/select) abajo. */
 .campo {
     display: flex;
     flex-direction: column;
@@ -283,21 +283,21 @@ body {
     font: inherit;
 }
 
-/* tecprime: Resalta el campo que el usuario está escribiendo. */
+/* Peñaloza: Resalta el campo que el usuario está escribiendo. */
 .campo input:focus,
 .campo select:focus {
     border-color: var(--color-secundario);
     outline: 3px solid rgba(42, 157, 143, 0.3);
 }
 
-/* tecprime: Campo de solo lectura (el ID): se ve apagado para indicar que no se puede editar. */
+/* Peñaloza: Campo de solo lectura (el ID): se ve apagado para indicar que no se puede editar. */
 .campo input[readonly] {
     background: #f0e9df;
     color: var(--color-texto-suave);
     cursor: not-allowed;
 }
 
-/* tecprime: Zona de botones del formulario: ocupa toda la fila y los centra. */
+/* Peñaloza: Zona de botones del formulario: ocupa toda la fila y los centra. */
 .acciones-formulario {
     grid-column: 1 / -1;
     display: flex;
@@ -307,7 +307,7 @@ body {
     margin-top: 8px;
 }
 
-/* tecprime: Nota aclaratoria que ocupa toda la fila de la cuadrícula. */
+/* Peñaloza: Nota aclaratoria que ocupa toda la fila de la cuadrícula. */
 .nota {
     grid-column: 1 / -1;
     margin: 0;
@@ -317,7 +317,7 @@ body {
 
 
 /* ---------- 9. PANTALLA DE INICIO (index.html) ---------- */
-/* tecprime: Distribución del inicio: [foto perro] [botones] [foto gato]. */
+/* Peñaloza: Distribución del inicio: [foto perro] [botones] [foto gato]. */
 .portada {
     display: flex;
     flex-wrap: wrap;
@@ -327,7 +327,7 @@ body {
     margin-top: 28px;
 }
 
-/* tecprime: Recuadros con el perro y el gato. Son emojis grandes dentro de un marco;
+/* Peñaloza: Recuadros con el perro y el gato. Son emojis grandes dentro de un marco;
    si el equipo quiere fotos reales, se reemplaza el emoji por una etiqueta <img>. */
 .marco-mascota {
     display: flex;
@@ -341,7 +341,7 @@ body {
     font-size: 5.5rem;
 }
 
-/* tecprime: Columna de botones del centro (Dueños, Mascotas, Citas). */
+/* Peñaloza: Columna de botones del centro (Dueños, Mascotas, Citas). */
 .menu-principal {
     display: flex;
     flex-direction: column;
@@ -355,7 +355,7 @@ body {
 
 
 /* ---------- 10. ADAPTACIÓN A CELULARES ---------- */
-/* tecprime: En pantallas angostas la barra superior pasa a una sola columna
+/* Peñaloza: En pantallas angostas la barra superior pasa a una sola columna
    y los botones del inicio se muestran primero, arriba de los dibujos. */
 @media (max-width: 640px) {
     .contenedor {

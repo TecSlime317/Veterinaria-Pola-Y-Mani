@@ -1,43 +1,43 @@
 <?php
-// tecprime: Carga la clase compartida para obtener la conexión con la base de datos.
+// Gael: Carga la clase compartida para obtener la conexión con la base de datos.
 require_once __DIR__ . '/../conexion.php';
 
-// tecprime: Recupera todos los dueños con los campos que se muestran en la tabla de administración.
+// Gael: Recupera todos los dueños con los campos que se muestran en la tabla de administración.
 function obtenerDuenos() {
     $db = Database::getinstancia()->getConnection();
 
-    // tecprime: Selecciona los datos requeridos de la tabla Dueno.
+    // Gael: Selecciona los datos requeridos de la tabla Dueno.
     $sql = 'SELECT ID_Dueno, Nombre, Apellidos, Edad, Telefono, CorreoElectronico, Direccion, Ciudad, FechaDeInscripcion
             FROM Dueno';
 
     $stmt = $db->prepare($sql);
 
-    // tecprime: Inicializa la colección que almacenará las filas devueltas por la consulta.
+    // Gael: Inicializa la colección que almacenará las filas devueltas por la consulta.
     $duenos = array();
 
-    // tecprime: Si la consulta pudo prepararse, la ejecuta y recorre el resultado fila por fila.
+    // Gael: Si la consulta pudo prepararse, la ejecuta y recorre el resultado fila por fila.
     if ($stmt) {
         $stmt->execute();
         $resultado = $stmt->get_result();
 
-        // tecprime: Agrega cada registro asociativo a la colección de dueños.
+        // Gael: Agrega cada registro asociativo a la colección de dueños.
         while ($fila = $resultado->fetch_assoc()) {
             $duenos[] = $fila;
         }
 
-        // tecprime: Libera los recursos asociados a la consulta preparada.
+        // Gael: Libera los recursos asociados a la consulta preparada.
         $stmt->close();
     }
 
-    // tecprime: Devuelve la colección de registros obtenidos.
+    // Gael: Devuelve la colección de registros obtenidos.
     return $duenos;
 }
 
-// tecprime: Obtiene los dueños y genera una fila HTML por cada registro para la página.
+// Gael: Obtiene los dueños y genera una fila HTML por cada registro para la página.
 $duenos = obtenerDuenos();
 
 foreach ($duenos as $d) {
-    // tecprime: Imprime las celdas con los datos del dueño y los controles disponibles en la fila.
+    // Gael: Imprime las celdas con los datos del dueño y los controles disponibles en la fila.
     echo '<tr>';
     echo '<td>' . $d['ID_Dueno'] . '</td>';
     echo '<td>' . $d['Nombre'] . '</td>';
