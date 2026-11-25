@@ -1,57 +1,79 @@
-<?php
-// tecprime: Carga la clase compartida para obtener la conexión con la base de datos.
-require_once __DIR__ . '/../conexion.php';
+<?php //Por: Diego Carballo
+// Importa las funciones compartidas de conexión, escape y consulta de citas.
+require_once __DIR__ . '/funcionesCita.php';
 
-// tecprime: Recupera todos los dueños con los campos que se muestran en la tabla de administración.
-function obtenerCitas() {
-    $db = Database::getinstancia()->getConnection();
+// Si se recibe un parámetro id por GET, entrega el detalle individual; de lo contrario, genera el listado general.
+if (isset($_GET['id'])) 
+{
+    // Valida que el parámetro id sea un número entero mayor o igual a 1.
+    $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
 
-    // tecprime: Selecciona los datos requeridos de la tabla cita.
-    $sql = 'SELECT ID_Cita, ID_Mascota, ID_Dueno, Fecha, Hora, Estado
-            FROM cita';
+    if ($id === false || $id === null) 
+    {
+        http_response_code(400);
+        echo '<p class="fila-mensaje" role="alert">Se requiere un ID de cita válido.</p>';
+    } 
 
-    $stmt = $db->prepare($sql);
+    else 
+    {
 
-    // tecprime: Inicializa la colección que almacenará las filas devueltas por la consulta.
-    $citas = array();
+        try 
+        {
+            imprimirDetalleCita($id);
+        } 
 
-    // tecprime: Si la consulta pudo prepararse, la ejecuta y recorre el resultado fila por fila.
-    if ($stmt) {
-        $stmt->execute();
-        $resultado = $stmt->get_result();
+        catch (mysqli_sql_exception $error) 
+        {
+            error_log('Error al consultar el registro de la cita: ' . $error->getMessage());
+            http_response_code(500);
+            echo '<p class="fila-mensaje" role="alert">Ocurrió un error al consultar la información de la cita.</p>';
+        }
+    }
+} 
 
-        // tecprime: Agrega cada registro asociativo a la colección de citas.
-        while ($fila = $resultado->fetch_assoc()) {
-            $citas[] = $fila;
+else 
+{
+    // Consulta todas las citas y construye las 7 columnas esperadas por la tabla en IndexCita.html.
+    try 
+    {
+        $citas = obtenerCitas();
+
+        // Si no hay registros, imprime una sola fila centrada abarcando las 7 columnas.
+        if (count($citas) === 0) 
+        {
+            echo '<tr class="fila-mensaje"><td colspan="7">No hay citas registradas.</td></tr>';
         }
 
-        // tecprime: Libera los recursos asociados a la consulta preparada.
-        $stmt->close();
+        // Recorre cada cita e imprime sus 6 campos de datos más la columna de acciones.
+        foreach ($citas as $cita) 
+        {
+            echo '<tr>';
+            echo '<td>' . escaparDato($cita['ID_Cita']) . '</td>';
+            echo '<td>' . escaparDato($cita['ID_Mascota']) . '</td>';
+            echo '<td>' . escaparDato($cita['ID_Dueno']) . '</td>';
+            echo '<td>' . escaparDato($cita['Fecha']) . '</td>';
+            echo '<td>' . escaparDato($cita['Hora']) . '</td>';
+            echo '<td>' . escaparDato($cita['Estado']) . '</td>';
+            echo '<td><details><summary>Opciones</summary>';
+            // Codifica el ID para pasarlo de forma segura en la URL.
+            $id = rawurlencode((string) $cita['ID_Cita']);
+            // Enlaces hacia las vistas HTML de lectura y edición individual.
+            echo '<a class="boton boton-secundario" href="LeerCita.html?id=' . $id . '">Ver</a>';
+            echo '<a class="boton boton-secundario" href="ActualizarCita.html?id=' . $id . '">Editar</a>';
+            // Botón con clase y atributo data-id para activar el mensaje emergente de confirmación en JS.
+            echo '<button type="button" class="boton-eliminar" data-id="' . $id . '">Eliminar</button>';
+            echo '</details></td>';
+            echo '</tr>';
+        }
+
+    } 
+    
+    catch (mysqli_sql_exception $error) 
+    {
+        // Guarda el error técnico en el log del servidor y muestra un mensaje seguro en la tabla.
+        error_log('Error al consultar el listado de citas: ' . $error->getMessage());
+        http_response_code(500);
+        echo '<tr class="fila-mensaje"><td colspan="7">No se pudo cargar el listado de citas.</td></tr>';
     }
-
-    // tecprime: Devuelve la colección de registros obtenidos.
-    return $citas;
 }
-
-// tecprime: Obtiene las citas y genera una fila HTML por cada registro para la página.
-$citas = obtenerCitas();
-
-foreach ($citas as $d) {
-    // tecprime: Imprime las celdas con los datos del dueño y los controles disponibles en la fila.
-    echo '<tr>';
-    echo '<td>' . $d['ID_Cita'] . '</td>';
-    echo '<td>' . $d['ID_Mascota'] . '</td>';
-    echo '<td>' . $d['ID_Dueno'] . '</td>';
-    echo '<td>' . $d['Fecha'] . '</td>';
-    echo '<td>' . $d['Hora'] . '</td>';
-    echo '<td>' . $d['Estado'] . '</td>';
-    echo '<td>';
-    echo '<details>';
-    echo '<summary>Opciones</summary>';
-    echo '<button type="button">Ver</button>';
-    echo '<button type="button">Editar</button>';
-    echo '<button type="button">Eliminar</button>';
-    echo '</details>';
-    echo '</td>';
-    echo '</tr>';
-}
+?>

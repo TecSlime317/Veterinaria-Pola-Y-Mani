@@ -1,0 +1,63 @@
+<!-- Documento HTML que muestra el expediente detallado de una sola cita solicitándolo a PHP. Por: Diego Carballo -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Configura la codificación, el diseño adaptable y el título de la pestaña. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Cita - Veterinaria Pola y Maní</title>
+
+    <!-- Enlaza la hoja de estilos compartida subiendo dos niveles desde html/cita/. -->
+    <link rel="stylesheet" href="../../css/index.css">
+</head>
+<body>
+    <main class="contenedor">
+        <!-- Barra superior con título centrado. -->
+        <header class="barra-superior">
+            <span class="izquierda"></span>
+            <h1>Detalle de la Cita</h1>
+            <span class="derecha"></span>
+        </header>
+
+        <!-- Contenedor donde JavaScript inyectará las tres tablas devueltas por LeerCita.php. -->
+        <div id="detalle-cita">
+            <p class="fila-mensaje">Cargando información de la cita...</p>
+        </div>
+
+        <!-- Botón para volver al listado principal de citas. -->
+        <div class="acciones-formulario">
+            <a class="boton boton-secundario" href="IndexCita.html">Regresar a Citas</a>
+        </div>
+    </main>
+
+    <!-- Script encargado de leer el ID de la URL y pedir los datos al servidor. -->
+    <script>
+        // Obtiene la referencia al contenedor principal de resultados.
+        var contenedor = document.getElementById('detalle-cita');
+
+        // Lee los parámetros de la URL actual (ej. ?id=10000001).
+        var parametros = new URLSearchParams(window.location.search);
+        var id = parametros.get('id');
+
+        // Si no se recibió ningún ID en la dirección, muestra una alerta sin consultar al servidor.
+        if (!id) {
+            contenedor.innerHTML = '<p class="fila-mensaje" role="alert">Se requiere un ID de cita válido.</p>';
+        } else {
+            // Solicita al archivo PHP el HTML con las tablas de la cita, mascota y dueño.
+            fetch('../../php/cita/leerCita.php?id=' + encodeURIComponent(id))
+                .then(function (respuesta) {
+                    // Convierte la respuesta HTTP (incluso si es 400, 404 o 500) a texto HTML.
+                    return respuesta.text();
+                })
+                .then(function (html) {
+                    // Inserta el contenido generado por PHP dentro del contenedor.
+                    contenedor.innerHTML = html;
+                })
+                .catch(function (error) {
+                    // Muestra un mensaje de fallo si el servidor no responde o no hay red.
+                    contenedor.innerHTML = '<p class="fila-mensaje" role="alert">No se pudo cargar el detalle (' + error.message + ').</p>';
+                });
+        }
+    </script>
+</body>
+</html>

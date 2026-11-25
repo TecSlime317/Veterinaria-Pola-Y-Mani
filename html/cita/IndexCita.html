@@ -1,4 +1,4 @@
-<!-- tecprime: Documento que muestra los registros de citas consultadas desde PHP. -->
+<!-- tecprime: Documento que muestra los registros de citas consultados desde PHP. Por: Diego Carballo -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,41 +6,128 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Citas - Veterinaria Pola y Maní</title>
+
+    <!-- tecprime: Enlaza la hoja de estilos compartida. Sube dos niveles (../../) porque este archivo está en html/cita/. -->
+    <link rel="stylesheet" href="../../css/index.css">
 </head>
 <body>
-    <!-- tecprime: Muestra el título del panel y el enlace para volver al inicio. -->
-    <h1>Administración de Citas</h1>
-    <a href="../../index.html">Volver al inicio</a>
+    <main class="contenedor">
 
-    <!-- tecprime: Define las columnas de información y el cuerpo que recibirá las filas desde PHP. -->
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID Cita</th>
-                <th>ID Mascota</th>
-                <th>ID Dueño</th>
-                <th>Fecha</th>
-                <th>Hora</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody id="tablaCitas">
-        </tbody>
-    </table>
+        <!-- tecprime: Barra superior: título (centro) y botón para añadir una cita nueva (derecha). -->
+        <header class="barra-superior">
+            <span class="izquierda"></span>
 
-    <!-- tecprime: Solicita al endpoint PHP las filas de citas y las inserta en el cuerpo de la tabla. -->
+            <h1>
+                <span class="huella" aria-hidden="true">🐾</span> 
+                Citas
+                <span class="huella" aria-hidden="true">🐾</span>
+            </h1>
+
+            <!-- tecprime: Lleva al formulario para dar de alta una cita. -->
+            <a class="boton derecha" href="RegistrarCita.html">Agendar</a>
+        </header>
+
+        <!-- tecprime: Envoltorio que permite desplazar la tabla en pantallas pequeñas. -->
+        <div class="tabla-contenedor">
+            <!-- tecprime: Define las 7 columnas (6 de la tabla Cita en MySQL + 1 para acciones). -->
+            <table class="tabla-datos">
+                <thead>
+                    <tr>
+                        <th>ID Cita</th>
+                        <th>ID Mascota</th>
+                        <th>ID Dueño</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <!-- tecprime: El id "tablacita" es el que usa el script de abajo para insertar las filas. -->
+                <tbody id="tablacita">
+                    <!-- tecprime: Mensaje temporal que se reemplaza cuando PHP responde. -->
+                    <tr class="fila-mensaje"><td colspan="7">Cargando citas...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- tecprime: Botón para regresar a la pantalla de inicio. -->
+        <div class="acciones-formulario">
+            <a class="boton boton-secundario" href="../../index.html">Regresar al Index</a>
+        </div>
+    </main>
+
+    <!-- tecprime: Solicita al endpoint PHP las filas de citas, las inserta en la tabla y atiende los botones de cada fila. -->
     <script>
-        // tecprime: Solicita al servidor el HTML de las filas de citas.
+        // tecprime: Guarda la referencia al cuerpo de la tabla (<tbody>) donde se insertarán las filas dinámicas.
+        var cuerpoTabla = document.getElementById('tablacita');
+
+        // tecprime: Realiza una petición GET al archivo PHP para obtener el código HTML de todas las citas registradas.
         fetch('../../php/cita/consultasCita.php')
-            // tecprime: Convierte la respuesta HTTP a texto HTML.
+            // tecprime: Primera promesa: verifica que la respuesta HTTP sea exitosa (código 200-299) y la convierte a texto.
             .then(function (respuesta) {
+                if (!respuesta.ok) 
+                {
+                    throw new Error('Respuesta HTTP ' + respuesta.status);
+                }
                 return respuesta.text();
             })
-            // tecprime: Inserta las filas recibidas en el cuerpo de la tabla.
+            // tecprime: Segunda promesa: inserta las filas recibidas en la tabla, o muestra un aviso si el resultado está vacío.
             .then(function (filas) {
-                document.getElementById('tablaCitas').innerHTML = filas;
+                if (filas.trim() === '') 
+                {
+                    cuerpoTabla.innerHTML = '<tr class="fila-mensaje"><td colspan="7">No hay citas registradas.</td></tr>';
+                } 
+                
+                else 
+                {
+                    cuerpoTabla.innerHTML = filas;
+                }
+            })
+            // tecprime: Captura cualquier error de red o fallo HTTP y muestra el detalle dentro de la tabla.
+            .catch(function (error) {
+                cuerpoTabla.innerHTML = '<tr class="fila-mensaje"><td colspan="7">No se pudieron cargar las citas (' + error.message + ').</td></tr>';
             });
+
+        // tecprime: Delegación de eventos para los botones ("Ver", "Editar" o "Eliminar") creados por PHP.
+        cuerpoTabla.addEventListener('click', function (evento) {
+            // tecprime: Comprueba si el elemento pulsado (o alguno de sus padres) corresponde al botón de eliminar.
+            var botonEliminar = evento.target.closest('.boton-eliminar');
+            if (!botonEliminar) 
+            {
+                return;
+            }
+
+            // tecprime: Obtiene el ID de la cita almacenado en el atributo personalizado "data-id" del botón.
+            var id = botonEliminar.getAttribute('data-id');
+
+            // tecprime: Muestra una ventana de confirmación antes de enviar la orden de borrado al servidor.
+            if (confirm('¿Seguro que deseas eliminar la cita con ID ' + id + '? Esta acción no se puede deshacer.')) 
+            {
+                // tecprime: Envía una petición POST a funcionesCita.php indicando la acción 'eliminar' y el ID de la cita.
+                fetch('../../php/cita/funcionesCita.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: 'accion=eliminar&id=' + encodeURIComponent(id)
+                })
+                // tecprime: Convierte la respuesta del servidor de formato JSON a un objeto de JavaScript.
+                .then(function (respuesta) { return respuesta.json(); })
+                // tecprime: Si la eliminación fue exitosa en la base de datos, elimina la fila visualmente de la tabla.
+                .then(function (datos) {
+                    if (datos.exito) 
+                    {
+                        botonEliminar.closest('tr').remove();
+                        alert(datos.mensaje);
+                    } 
+                    
+                    else 
+                    {
+                        alert('No se pudo eliminar: ' + datos.mensaje);
+                    }
+                })
+                // tecprime: Maneja posibles fallos de conexión o errores al procesar la respuesta JSON del servidor.
+                .catch(function () { alert('Error de conexión al intentar eliminar la cita.'); });
+            }
+        });
     </script>
 </body>
 </html>
