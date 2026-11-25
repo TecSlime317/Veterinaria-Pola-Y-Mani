@@ -1,2 +1,2 @@
-# tecprime: Evita incluir en Git el archivo local de conexión y su configuración sensible.
+# Gael: Evita incluir en Git el archivo local de conexión y su configuración sensible.
 /php/conexion.php

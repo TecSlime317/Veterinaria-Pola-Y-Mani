@@ -1,43 +1,43 @@
 <?php
-// tecprime: Carga la clase compartida para obtener la conexión con la base de datos.
+// Marco: Carga la clase compartida para obtener la conexión con la base de datos.
 require_once __DIR__ . '/../conexion.php';
 
-// tecprime: Recupera todas las mascotas con los campos que se muestran en la tabla de administración.
+// Marco: Recupera todas las mascotas con los campos que se muestran en la tabla de administración.
 function obtenermascota() {
     $db = Database::getinstancia()->getConnection();
 
-    // tecprime: Selecciona los datos requeridos de la tabla mascota.
+    // Marco: Selecciona los datos requeridos de la tabla mascota.
     $sql = 'SELECT ID_Mascota,ID_Dueno,Nombre,Genero,Especie,Raza,Peso,FechaDeNacimiento,Estado
             FROM mascota';
 
     $stmt = $db->prepare($sql);
 
-    // tecprime: Inicializa la colección que almacenará las filas devueltas por la consulta.
+    // Marco: Inicializa la colección que almacenará las filas devueltas por la consulta.
     $mascota = array();
 
-    // tecprime: Si la consulta pudo prepararse, la ejecuta y recorre el resultado fila por fila.
+    // Marco: Si la consulta pudo prepararse, la ejecuta y recorre el resultado fila por fila.
     if ($stmt) {
         $stmt->execute();
         $resultado = $stmt->get_result();
 
-        // tecprime: Agrega cada registro asociativo a la colección de mascotas.
+        // Marco: Agrega cada registro asociativo a la colección de mascotas.
         while ($fila = $resultado->fetch_assoc()) {
             $mascota[] = $fila;
         }
 
-        // tecprime: Libera los recursos asociados a la consulta preparada.
+        // Marco: Libera los recursos asociados a la consulta preparada.
         $stmt->close();
     }
 
-    // tecprime: Devuelve la colección de registros obtenidos.
+    // Marco: Devuelve la colección de registros obtenidos.
     return $mascota;
 }
 
-// tecprime: Obtiene los dueños y genera una fila HTML por cada registro para la página.
+// Marco: Obtiene los dueños y genera una fila HTML por cada registro para la página.
 $mascota = obtenermascota();
 
 foreach ($mascota as $m) {
-    // tecprime: Imprime las celdas con los datos dela mascota y los controles disponibles en la fila.
+    // Marco: Imprime las celdas con los datos dela mascota y los controles disponibles en la fila.
     echo '<tr>';
     echo '<td>' . $m['ID_Mascota'] . '</td>';
     echo '<td>' . $m['ID_Dueno'] . '</td>';
