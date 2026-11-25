@@ -11,9 +11,11 @@
 /* Peñaloza: Aquí se definen los colores y el radio de las esquinas una sola vez.
    Para cambiar la paleta del sitio basta con editar estos valores. */
 :root {
-    --color-fondo: #fff7ec;              /* Peñaloza: Fondo general de la página (crema). */
+    --color-fondo: #b8b3ad;              /* Peñaloza: Fondo general de la página (crema). */
+    /*Soul DV: cambié el color de fondo, dejo el anterior si lo quieren de vuelta: fff7ec*/
     --color-tarjeta: #ffffff;            /* Peñaloza: Fondo del recuadro principal. */
-    --color-principal: #e8833a;          /* Peñaloza: Naranja de botones y encabezados de tabla. */
+    --color-principal: #926b4f;          /* Peñaloza: Naranja de botones y encabezados de tabla. */
+    /*Soul DV: cambié el color principal, pero dejo el anterior por si lo quieren de vuelta: e8833a*/
     --color-principal-oscuro: #c96a24;   /* Peñaloza: Naranja oscuro para hover y títulos. */
     --color-secundario: #2a9d8f;         /* Peñaloza: Verde azulado para enlaces y enfoque de campos. */
     --color-texto: #3b2a1c;              /* Peñaloza: Color base del texto (café oscuro). */

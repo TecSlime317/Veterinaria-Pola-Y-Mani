@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dueños - Veterinaria Pola y Maní</title>
     <link rel="stylesheet" href="../../css/index.css">
+    <!-- Soul DV: el Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.9/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Soul DV: los iconos del Bootstrap, ando viendo como se ponen -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+          rel="stylesheet">
 </head>
 <body>
     <main class="contenedor">
