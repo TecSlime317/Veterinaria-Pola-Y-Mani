@@ -57,10 +57,10 @@ else
             echo '<td><details><summary>Opciones</summary>';
             // Codifica el ID para pasarlo de forma segura en la URL.
             $id = rawurlencode((string) $cita['ID_Cita']);
-            // Enlaces hacia las vistas HTML de lectura y edición individual.
-            echo '<a class="boton boton-secundario" href="LeerCita.html?id=' . $id . '">Ver</a>';
-            echo '<a class="boton boton-secundario" href="ActualizarCita.html?id=' . $id . '">Editar</a>';
-            // Botón con clase y atributo data-id para activar el mensaje emergente de confirmación en JS.
+            // Se usan etiquetas <button> con redirección JS para heredar el diseño vertical, ancho completo e iconos de index.css.
+            echo '<button type="button" onclick="window.location.href=\'LeerCita.html?id=' . $id . '\'">Ver</button>';
+            echo '<button type="button" onclick="window.location.href=\'ActualizarCita.html?id=' . $id . '\'">Editar</button>';
+            // Tercer botón del grupo (<details>); recibe el borde rojo de index.css y activa la confirmación de borrado en JS.
             echo '<button type="button" class="boton-eliminar" data-id="' . $id . '">Eliminar</button>';
             echo '</details></td>';
             echo '</tr>';
