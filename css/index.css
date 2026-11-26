@@ -43,6 +43,11 @@ body {
     line-height: 1.5;
 }
 
+body.inicio {
+    min-height: 100vh;
+    background: var(--color-fondo) url("../img/imagen_destacada.jpg") center / cover no-repeat fixed;
+}
+
 
 /* Alprox9: ---------- 3. RECUADRO PRINCIPAL ---------- */
 /* Alprox9: Recuadro blanco centrado que contiene el contenido de cada pantalla
