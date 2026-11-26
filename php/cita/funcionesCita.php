@@ -1,14 +1,14 @@
-<?php //Por: Diego Carballo
+<?php // diegoCar09: Define consultas y funciones de salida para el módulo de citas.
 require_once __DIR__ . '/../conexion.php';
 
-// Devuelve la conexión compartida configurada para el resto del sistema.
+// tecslime: Devuelve la conexión compartida configurada para el resto del sistema.
 function obtenerConexion()
 {
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
     return Database::getinstancia()->getConnection();
 }
 
-// Convierte los valores de la base de datos en texto seguro para insertarlo en HTML (previene ataques XSS).
+// diegoCar09: Convierte los valores de la base de datos en texto seguro para insertarlo en HTML (previene ataques XSS).
 // Muestra un guion largo cuando un campo opcional está vacío o contiene NULL.
 function escaparDato(mixed $valor)
 {
@@ -20,7 +20,7 @@ function escaparDato(mixed $valor)
     return htmlspecialchars((string) $valor, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
-// Consulta todas las citas registradas ordenadas por fecha, hora e ID para llenar la tabla principal.
+// diegoCar09: Consulta todas las citas registradas ordenadas por fecha, hora e ID para llenar la tabla principal.
 function obtenerCitas()
 {
     $conexion = obtenerConexion();
@@ -42,7 +42,7 @@ function obtenerCitas()
     return $citas;
 }
 
-// Obtiene una sola cita por su ID junto con los nombres de su mascota y dueño mediante LEFT JOIN.
+// diegoCar09: Obtiene una sola cita por su ID junto con los nombres de su mascota y dueño mediante LEFT JOIN.
 // Se utiliza para rellenar los campos en ActualizarCita.html.
 function obtenerCitaPorId(int $id): ?array
 {
@@ -66,7 +66,7 @@ function obtenerCitaPorId(int $id): ?array
     return $cita ?: null;
 }
 
-// Genera e imprime una tabla HTML reutilizable a partir de un arreglo de encabezados y filas.
+// diegoCar09: Genera e imprime una tabla HTML reutilizable a partir de un arreglo de encabezados y filas.
 function imprimirTabla(array $encabezados, array $filas, string $mensajeVacio)
 {
     echo '<div class="tabla-contenedor"><table class="tabla-datos"><thead><tr>';
@@ -101,7 +101,7 @@ function imprimirTabla(array $encabezados, array $filas, string $mensajeVacio)
     echo '</tbody></table></div>';
 }
 
-// Busca una cita por su ID e imprime tres tablas: detalle de la cita, mascota asociada y dueño asociado.
+// diegoCar09: Busca una cita por su ID e imprime tres tablas: detalle de la cita, mascota asociada y dueño asociado.
 function imprimirDetalleCita(int $id)
 {
     $conexion = obtenerConexion();
@@ -194,7 +194,7 @@ function imprimirDetalleCita(int $id)
     );
 }
 
-// Endpoint POST: Elimina una cita cuando el usuario acepta el mensaje emergente (confirm) en IndexCita.html.
+// diegoCar09: Endpoint POST que elimina una cita después de la confirmación del usuario en IndexCita.html.
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['accion'] ?? '') === 'eliminar') 
 {
     header('Content-Type: application/json; charset=UTF-8');

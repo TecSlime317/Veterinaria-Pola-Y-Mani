@@ -1,43 +1,43 @@
 <?php
-// Marco: Carga la clase compartida para obtener la conexión con la base de datos.
+// awa123691: Carga la conexión común del sistema y prepara las consultas de mascotas.
 require_once __DIR__ . '/../conexion.php';
 
-// Marco: Recupera todas las mascotas con los campos que se muestran en la tabla de administración.
+// awa123691: Recupera todas las mascotas con los campos que se muestran en la tabla de administración.
 function obtenermascota() {
     $db = Database::getinstancia()->getConnection();
 
-    // Marco: Selecciona los datos requeridos de la tabla mascota.
+    // awa123691: Selecciona los datos requeridos de la tabla mascota.
     $sql = 'SELECT ID_Mascota,ID_Dueno,Nombre,Genero,Especie,Raza,Peso,FechaDeNacimiento,Estado
             FROM mascota';
 
     $stmt = $db->prepare($sql);
 
-    // Marco: Inicializa la colección que almacenará las filas devueltas por la consulta.
+    // awa123691: Inicializa la colección que almacenará las filas devueltas por la consulta.
     $mascota = array();
 
-    // Marco: Si la consulta pudo prepararse, la ejecuta y recorre el resultado fila por fila.
+    // awa123691: Si la consulta pudo prepararse, la ejecuta y recorre el resultado fila por fila.
     if ($stmt) {
         $stmt->execute();
         $resultado = $stmt->get_result();
 
-        // Marco: Agrega cada registro asociativo a la colección de mascotas.
+        // awa123691: Agrega cada registro asociativo a la colección de mascotas.
         while ($fila = $resultado->fetch_assoc()) {
             $mascota[] = $fila;
         }
 
-        // Marco: Libera los recursos asociados a la consulta preparada.
+        // awa123691: Libera los recursos asociados a la consulta preparada.
         $stmt->close();
     }
 
-    // Marco: Devuelve la colección de registros obtenidos.
+    // awa123691: Devuelve la colección de registros obtenidos.
     return $mascota;
 }
 
-// Marco: Obtiene los dueños y genera una fila HTML por cada registro para la página.
+// awa123691: Obtiene las mascotas consultadas y genera una fila HTML por registro para el listado.
 $mascota = obtenermascota();
 
 foreach ($mascota as $m) {
-    // Marco: Imprime las celdas con los datos dela mascota y los controles disponibles en la fila.
+    // awa123691: Imprime las celdas con los datos dela mascota y los controles disponibles en la fila.
     echo '<tr>';
     echo '<td>' . $m['ID_Mascota'] . '</td>';
     echo '<td>' . $m['ID_Dueno'] . '</td>';

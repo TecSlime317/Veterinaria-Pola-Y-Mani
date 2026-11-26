@@ -1,19 +1,19 @@
-<!-- tecprime: Pantalla "Registrar dueño": formulario para dar de alta un dueño nuevo. Se llega desde el botón "Registrar" de la lista de dueños. -->
+<!-- Alprox9: Pantalla "Registrar dueño": formulario para dar de alta un dueño nuevo. Se llega desde el botón "Registrar" de la lista de dueños. -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <!-- tecprime: Configura la codificación, la adaptación a pantallas y el título de la sección. -->
+    <!-- Alprox9: Configura la codificación, la adaptación a pantallas y el título de la sección. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar dueño - Veterinaria Pola y Maní</title>
 
-    <!-- tecprime: Enlaza la hoja de estilos compartida (dos niveles arriba: ../../). -->
+    <!-- Alprox9: Enlaza la hoja de estilos compartida (dos niveles arriba: ../../). -->
     <link rel="stylesheet" href="../../css/index.css">
 </head>
 <body>
     <main class="contenedor contenedor-angosto">
 
-        <!-- tecprime: Título de la pantalla con huellitas decorativas. -->
+        <!-- Alprox9: Título de la pantalla con huellitas decorativas. -->
         <header class="encabezado">
             <h1>
                 <span class="huella" aria-hidden="true">🐾</span>
@@ -22,29 +22,29 @@
             </h1>
         </header>
 
-        <!-- tecprime: Formulario de alta. Los nombres (atributo name) son los que recibirá PHP en $_POST.
+        <!-- Alprox9: Formulario de alta. Los nombres (atributo name) son los que recibirá PHP en $_POST.
              La ruta de "action" es PROVISIONAL: el archivo registrarDueño.php lo debe crear quien haga el backend.
              No lleva campo ID porque la base de datos lo genera sola. -->
         <form class="formulario" action="../../php/dueño/registrarDueño.php" method="post">
 
-            <!-- tecprime: Nombre del dueño (obligatorio). -->
+            <!-- Alprox9: Nombre del dueño (obligatorio). -->
             <div class="campo">
                 <label for="nombre">Nombre</label>
                 <input type="text" id="nombre" name="Nombre" required>
             </div>
 
-            <!-- tecprime: Correo del dueño (obligatorio). El tipo "email" valida el formato automáticamente. -->
+            <!-- Alprox9: Correo del dueño (obligatorio). El tipo "email" valida el formato automáticamente. -->
             <div class="campo">
                 <label for="correo">Correo</label>
                 <input type="email" id="correo" name="CorreoElectronico" required>
             </div>
 
-            <!-- tecprime: Botones del formulario. "Reiniciar" vacía los campos, "Registrar" envía los datos
+            <!-- Alprox9: Botones del formulario. "Reiniciar" vacía los campos, "Registrar" envía los datos
                  y "Volver" regresa a la lista sin guardar. -->
             <div class="acciones-formulario">
                 <button class="boton boton-secundario" type="reset">Reiniciar</button>
                 <button class="boton" type="submit">Registrar</button>
-                <!-- Peñaloza: Regresa al listado de dueños, que se renderiza del lado del servidor. -->
+                <!-- tecslime: Regresa al listado de dueños, que se renderiza del lado del servidor. -->
                 <a class="boton boton-secundario" href="IndexDueño.php">Volver</a>
             </div>
         </form>

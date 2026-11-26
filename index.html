@@ -1,21 +1,22 @@
-<!-- tecprime: Documento principal (pantalla de inicio). Desde aquí se entra a las tres secciones de administración: Dueños, Mascotas y Citas. -->
+<!-- Alprox9: Documento principal (pantalla de inicio). Desde aquí se entra a las tres secciones de administración: Dueños, Mascotas y Citas. -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <!-- tecprime: Configura la codificación, la adaptación a pantallas y el título de la página. -->
+    <!-- tecslime: Configura la codificación, la adaptación a pantallas y el título de la página. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Veterinaria Pola y Maní</title>
 
-    <!-- tecprime: Enlaza la hoja de estilos compartida. La ruta es relativa a este archivo (raíz del proyecto). -->
+    <!-- Alprox9: Enlaza la hoja de estilos compartida. La ruta es relativa a este archivo (raíz del proyecto). -->
     <link rel="stylesheet" href="css/index.css">
 
 </head>
 <body>
-    <!-- tecprime: Recuadro principal que agrupa todo el contenido de la pantalla. -->
+    <!-- Alprox9: Recuadro principal que agrupa todo el contenido de la pantalla. -->
+    <!-- Alprox9: Contiene la portada y los enlaces a las secciones administrativas. -->
     <main class="contenedor">
 
-        <!-- tecprime: Encabezado con el nombre del sistema entre dos huellitas decorativas.
+        <!-- Alprox9: Encabezado con el nombre del sistema entre dos huellitas decorativas.
              aria-hidden="true" evita que los lectores de pantalla lean los emojis. -->
         <header class="encabezado">
             <h1>
@@ -26,26 +27,26 @@
             <p class="subtitulo">Sistema de administración. Selecciona la tabla que deseas administrar:</p>
         </header>
 
-        <!-- tecprime: Zona central con tres columnas: dibujo de perro, menú de botones y dibujo de gato. -->
+        <!-- Alprox9: Zona central con tres columnas: dibujo de perro, menú de botones y dibujo de gato. -->
         <section class="portada">
 
-            <!-- tecprime: Dibujo decorativo del perro (lado izquierdo). -->
+            <!-- Alprox9: Dibujo decorativo del perro (lado izquierdo). -->
             <div class="marco-mascota" aria-hidden="true">🐶</div>
 
-            <!-- tecprime: Menú de navegación. Se usan enlaces (<a>) con aspecto de botón porque solo
+            <!-- Alprox9: Menú de navegación. Se usan enlaces (<a>) con aspecto de botón porque solo
                  cambian de página; las rutas son relativas a la raíz del proyecto. -->
             <nav class="menu-principal" aria-label="Secciones del sistema">
-                <!-- tecprime: Abre el panel de administración de dueños. -->
+                <!-- tecslime: Abre el panel de administración de dueños. -->
                 <a class="boton" href="html/dueño/IndexDueño.php">Dueños</a>
 
-                <!-- tecprime: Abre el panel de administración de mascotas. -->
+                <!-- Alprox9: Abre el panel de administración de mascotas. -->
                 <a class="boton" href="html/mascota/IndexMascota.html">Mascotas</a>
 
-                <!-- tecprime: Abre el panel de administración de citas. -->
+                <!-- Alprox9: Abre el panel de administración de citas. -->
                 <a class="boton" href="html/cita/IndexCita.html">Citas</a>
             </nav>
 
-            <!-- tecprime: Dibujo decorativo del gato (lado derecho). -->
+            <!-- Alprox9: Dibujo decorativo del gato (lado derecho). -->
             <div class="marco-mascota" aria-hidden="true">🐱</div>
         </section>
     </main>

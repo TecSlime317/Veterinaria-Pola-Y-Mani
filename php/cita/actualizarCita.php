@@ -1,14 +1,14 @@
-<?php //Por: Diego Carballo
-// tecprime: Importa las funciones compartidas de conexión y consulta de citas.
+<?php // diegoCar09: Endpoint que consulta una cita y procesa sus cambios.
+// diegoCar09: Importa las funciones compartidas de conexión y consulta de citas.
 require_once __DIR__ . '/funcionesCita.php';
 
-// tecprime: Indica al navegador que todas las respuestas de este archivo serán en formato JSON.
+// diegoCar09: Indica al navegador que todas las respuestas de este archivo serán en formato JSON.
 header('Content-Type: application/json; charset=UTF-8');
 
-// tecprime: Valida que el parámetro 'id' recibido en la URL sea un entero positivo.
+// diegoCar09: Valida que el parámetro 'id' recibido en la URL sea un entero positivo.
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
 
-// tecprime: Si el ID falta o es inválido, devuelve un error HTTP 400 y detiene la ejecución.
+// diegoCar09: Si el ID falta o es inválido, devuelve un error HTTP 400 y detiene la ejecución.
 if ($id === false || $id === null) 
 {
     http_response_code(400);
@@ -18,7 +18,7 @@ if ($id === false || $id === null)
 
 try
 {
-    // tecprime: Si la petición es POST, actualiza únicamente Fecha, Hora y Estado (protegiendo los IDs).
+    // diegoCar09: Si la petición es POST, actualiza únicamente Fecha, Hora y Estado (protegiendo los IDs).
     if ($_SERVER['REQUEST_METHOD'] === 'POST') 
     {
         $fecha  = trim($_POST['Fecha'] ?? '');
@@ -44,7 +44,7 @@ try
         exit;
     }
 
-    // tecprime: Si la petición es GET, consulta los datos actuales de la cita (incluyendo mascota y dueño) y los envía en JSON.
+    // diegoCar09: Si la petición es GET, consulta los datos actuales de la cita (incluyendo mascota y dueño) y los envía en JSON.
     $cita = obtenerCitaPorId($id);
 
     if (!$cita) 
@@ -61,7 +61,7 @@ try
 
 catch (mysqli_sql_exception $error)
 {
-    // tecprime: Registra el detalle técnico en el servidor y devuelve un mensaje seguro en JSON.
+    // diegoCar09: Registra el detalle técnico en el servidor y devuelve un mensaje seguro en JSON.
     error_log('Error en actualizarCita.php: ' . $error->getMessage());
     http_response_code(500);
     echo json_encode(['exito' => false, 'mensaje' => 'Error de base de datos al procesar la cita.']);

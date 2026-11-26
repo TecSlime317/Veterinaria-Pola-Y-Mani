@@ -1,19 +1,19 @@
-<!-- tecprime: Pantalla "Actualizar dueño": formulario para modificar los datos de un dueño existente. Se llega desde el botón "Editar" de la lista de dueños. -->
+<!-- Alprox9: Pantalla "Actualizar dueño": formulario para modificar los datos de un dueño existente. Se llega desde el botón "Editar" de la lista de dueños. -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <!-- tecprime: Configura la codificación, la adaptación a pantallas y el título de la sección. -->
+    <!-- Alprox9: Configura la codificación, la adaptación a pantallas y el título de la sección. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Actualizar dueño - Veterinaria Pola y Maní</title>
 
-    <!-- tecprime: Enlaza la hoja de estilos compartida (dos niveles arriba: ../../). -->
+    <!-- Alprox9: Enlaza la hoja de estilos compartida (dos niveles arriba: ../../). -->
     <link rel="stylesheet" href="../../css/index.css">
 </head>
 <body>
     <main class="contenedor contenedor-angosto">
 
-        <!-- tecprime: Título de la pantalla con huellitas decorativas. -->
+        <!-- Alprox9: Título de la pantalla con huellitas decorativas. -->
         <header class="encabezado">
             <h1>
                 <span class="huella" aria-hidden="true">🐾</span>
@@ -22,11 +22,11 @@
             </h1>
         </header>
 
-        <!-- tecprime: Formulario de actualización. Los nombres (atributo name) son los que recibirá PHP en $_POST.
+        <!-- Alprox9: Formulario de actualización. Los nombres (atributo name) son los que recibirá PHP en $_POST.
              La ruta de "action" es PROVISIONAL: el archivo actualizarDueño.php lo debe crear quien haga el backend. -->
         <form class="formulario" action="../../php/dueño/actualizarDueño.php" method="post">
 
-            <!-- tecprime: ID del dueño. Se muestra para saber a quién se está modificando, pero es de solo lectura
+            <!-- Alprox9: ID del dueño. Se muestra para saber a quién se está modificando, pero es de solo lectura
                  (readonly) y no se puede cambiar. Se usa readonly y no disabled porque un campo disabled
                  NO se envía con el formulario y PHP necesita el ID para saber qué registro actualizar. -->
             <div class="campo">
@@ -34,38 +34,38 @@
                 <input type="text" id="idDueno" name="ID_Dueno" readonly>
             </div>
 
-            <!-- tecprime: Nombre del dueño (obligatorio). -->
+            <!-- Alprox9: Nombre del dueño (obligatorio). -->
             <div class="campo">
                 <label for="nombre">Nombre</label>
                 <input type="text" id="nombre" name="Nombre" required>
             </div>
 
-            <!-- tecprime: Correo del dueño (obligatorio). El tipo "email" valida el formato automáticamente. -->
+            <!-- Alprox9: Correo del dueño (obligatorio). El tipo "email" valida el formato automáticamente. -->
             <div class="campo">
                 <label for="correo">Correo</label>
                 <input type="email" id="correo" name="CorreoElectronico" required>
             </div>
 
-            <!-- tecprime: Nota que explica el asterisco del campo ID. -->
+            <!-- Alprox9: Nota que explica el asterisco del campo ID. -->
             <p class="nota">* El ID se muestra para saber qué dueño se está modificando, pero no puede cambiarse.</p>
 
-            <!-- tecprime: Botones del formulario. "Cancelar" regresa a la lista sin guardar;
+            <!-- Alprox9: Botones del formulario. "Cancelar" regresa a la lista sin guardar;
                  "Confirmar" envía los datos al servidor. -->
             <div class="acciones-formulario">
-                <!-- Peñaloza: Vuelve al listado servido por PHP, conservando el flujo del módulo de dueños. -->
+                <!-- tecslime: Vuelve al listado servido por PHP, conservando el flujo del módulo de dueños. -->
                 <a class="boton boton-secundario" href="IndexDueño.php">Cancelar</a>
                 <button class="boton" type="submit">Confirmar</button>
             </div>
         </form>
     </main>
 
-    <!-- tecprime: Script que llena el campo ID con el valor recibido en la URL. -->
+    <!-- Alprox9: Script que llena el campo ID con el valor recibido en la URL. -->
     <script>
-        // tecprime: Lee el parámetro "id" de la URL (por ejemplo ActualizarDueño.html?id=3 -> "3").
+        // Alprox9: Lee el parámetro "id" de la URL (por ejemplo ActualizarDueño.html?id=3 -> "3").
         var parametros = new URLSearchParams(window.location.search);
         var id = parametros.get('id');
 
-        // tecprime: Si la URL no trae ID (alguien abrió la página directamente), se deja un guion
+        // Alprox9: Si la URL no trae ID (alguien abrió la página directamente), se deja un guion
         // para que sea evidente que falta y se evita enviar el formulario por error.
         if (id === null || id === '') {
             document.getElementById('idDueno').value = '—';
@@ -74,7 +74,7 @@
             document.getElementById('idDueno').value = id;
         }
 
-        // tecprime: PENDIENTE DE BACKEND: para precargar Nombre y Correo con los datos actuales del dueño,
+        // Alprox9: PENDIENTE DE BACKEND: para precargar Nombre y Correo con los datos actuales del dueño,
         // se puede hacer fetch('../../php/dueño/leerDueño.php?id=' + id) y asignar los valores a los inputs
         // "nombre" y "correo" con .value.
     </script>

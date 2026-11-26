@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Peñaloza: Hoja de estilos compartida por TODAS las páginas del sistema.
+   Alprox9: Hoja de estilos compartida por TODAS las páginas del sistema.
    Cada HTML la enlaza con una ruta relativa distinta:
      - index.html (raíz)            -> css/index.css
      - html/dueño/*.html, etc.      -> ../../css/index.css
@@ -7,33 +7,33 @@
    ========================================================================== */
 
 
-/* ---------- 1. VARIABLES DE COLOR Y MEDIDAS ---------- */
-/* Peñaloza: Aquí se definen los colores y el radio de las esquinas una sola vez.
+/* Alprox9: ---------- 1. VARIABLES DE COLOR Y MEDIDAS ---------- */
+/* Alprox9: Aquí se definen los colores y el radio de las esquinas una sola vez.
    Para cambiar la paleta del sitio basta con editar estos valores. */
 :root {
-    --color-fondo: #b8b3ad;              /* Peñaloza: Fondo general de la página (crema). */
+    --color-fondo: #b8b3ad;              /* Alprox9: Fondo general de la página (crema). */
     /*Soul DV: cambié el color de fondo, dejo el anterior si lo quieren de vuelta: fff7ec*/
-    --color-tarjeta: #ffffff;            /* Peñaloza: Fondo del recuadro principal. */
-    --color-principal: #926b4f;          /* Peñaloza: Naranja de botones y encabezados de tabla. */
+    --color-tarjeta: #ffffff;            /* Alprox9: Fondo del recuadro principal. */
+    --color-principal: #926b4f;          /* Alprox9: Naranja de botones y encabezados de tabla. */
     /*Soul DV: cambié el color principal, pero dejo el anterior por si lo quieren de vuelta: e8833a*/
-    --color-principal-oscuro: #c96a24;   /* Peñaloza: Naranja oscuro para hover y títulos. */
-    --color-secundario: #2a9d8f;         /* Peñaloza: Verde azulado para enlaces y enfoque de campos. */
-    --color-texto: #3b2a1c;              /* Peñaloza: Color base del texto (café oscuro). */
-    --color-texto-suave: #7a6a58;        /* Peñaloza: Texto secundario (notas, campos bloqueados). */
-    --color-borde: #e6d3bd;              /* Peñaloza: Color de bordes y líneas divisorias. */
-    --color-peligro: #c0392b;            /* Peñaloza: Rojo para acciones destructivas (eliminar). */
-    --radio: 14px;                       /* Peñaloza: Redondeo de esquinas de recuadros. */
+    --color-principal-oscuro: #c96a24;   /* Alprox9: Naranja oscuro para hover y títulos. */
+    --color-secundario: #2a9d8f;         /* Alprox9: Verde azulado para enlaces y enfoque de campos. */
+    --color-texto: #3b2a1c;              /* Alprox9: Color base del texto (café oscuro). */
+    --color-texto-suave: #7a6a58;        /* Alprox9: Texto secundario (notas, campos bloqueados). */
+    --color-borde: #e6d3bd;              /* Alprox9: Color de bordes y líneas divisorias. */
+    --color-peligro: #c0392b;            /* Alprox9: Rojo para acciones destructivas (eliminar). */
+    --radio: 14px;                       /* Alprox9: Redondeo de esquinas de recuadros. */
 }
 
 
-/* ---------- 2. REGLAS BASE ---------- */
-/* Peñaloza: Hace que el padding y el borde cuenten dentro del ancho de cada elemento,
+/* Alprox9: ---------- 2. REGLAS BASE ---------- */
+/* Alprox9: Hace que el padding y el borde cuenten dentro del ancho de cada elemento,
    así los recuadros no se desbordan de la pantalla. */
 * {
     box-sizing: border-box;
 }
 
-/* Peñaloza: Estilo general del documento: fondo, tipografía y espacio alrededor del contenido. */
+/* Alprox9: Estilo general del documento: fondo, tipografía y espacio alrededor del contenido. */
 body {
     margin: 0;
     padding: 24px 16px;
@@ -44,8 +44,8 @@ body {
 }
 
 
-/* ---------- 3. RECUADRO PRINCIPAL ---------- */
-/* Peñaloza: Recuadro blanco centrado que contiene el contenido de cada pantalla
+/* Alprox9: ---------- 3. RECUADRO PRINCIPAL ---------- */
+/* Alprox9: Recuadro blanco centrado que contiene el contenido de cada pantalla
    (equivale al "marco" dibujado en los bocetos). */
 .contenedor {
     max-width: 1100px;
@@ -57,20 +57,20 @@ body {
     box-shadow: 0 6px 18px rgba(120, 80, 30, 0.12);
 }
 
-/* Peñaloza: Variante más estrecha para pantallas con formularios (actualizar, leer, registrar). */
+/* Alprox9: Variante más estrecha para pantallas con formularios (actualizar, leer, registrar). */
 .contenedor-angosto {
     max-width: 760px;
 }
 
 
-/* ---------- 4. ENCABEZADOS ---------- */
-/* Peñaloza: Bloque de título centrado (usado en el index y en los formularios). */
+/* Alprox9: ---------- 4. ENCABEZADOS ---------- */
+/* Alprox9: Bloque de título centrado (usado en el index y en los formularios). */
 .encabezado {
     margin-bottom: 20px;
     text-align: center;
 }
 
-/* Peñaloza: Título principal de cada pantalla, con tamaño que se adapta al ancho. */
+/* Alprox9: Título principal de cada pantalla, con tamaño que se adapta al ancho. */
 .encabezado h1,
 .barra-superior h1 {
     margin: 0;
@@ -78,13 +78,13 @@ body {
     font-size: clamp(1.5rem, 4vw, 2.3rem);
 }
 
-/* Peñaloza: Texto de apoyo debajo del título. */
+/* Alprox9: Texto de apoyo debajo del título. */
 .subtitulo {
     margin: 6px 0 0;
     color: var(--color-texto-suave);
 }
 
-/* Peñaloza: Huellitas decorativas a los lados del título (son emojis, no imágenes,
+/* Alprox9: Huellitas decorativas a los lados del título (son emojis, no imágenes,
    por eso no hace falta ningún archivo extra). Se inclinan en sentidos opuestos. */
 .huella {
     display: inline-block;
@@ -96,7 +96,7 @@ body {
     transform: rotate(15deg);
 }
 
-/* Peñaloza: Barra superior de las pantallas de listado:
+/* Alprox9: Barra superior de las pantallas de listado:
    [botón izquierdo] [título centrado] [botón derecho]. */
 .barra-superior {
     display: grid;
@@ -119,8 +119,8 @@ body {
 }
 
 
-/* ---------- 5. BOTONES ---------- */
-/* Peñaloza: Estilo base de botones. Sirve tanto para <a> (navegación) como para <button>
+/* Alprox9: ---------- 5. BOTONES ---------- */
+/* Alprox9: Estilo base de botones. Sirve tanto para <a> (navegación) como para <button>
    (enviar formularios). Se combina con una variante (.boton-secundario). */
 .boton {
     display: inline-block;
@@ -142,7 +142,7 @@ body {
     border-color: var(--color-principal-oscuro);
 }
 
-/* Peñaloza: Variante "hueca" para acciones secundarias (Volver, Cancelar, Reiniciar).
+/* Alprox9: Variante "hueca" para acciones secundarias (Volver, Cancelar, Reiniciar).
    Debe ir DESPUÉS de .boton:hover para que su hover tenga prioridad. */
 .boton-secundario {
     background: transparent;
@@ -155,8 +155,8 @@ body {
 }
 
 
-/* ---------- 6. TABLAS DE DATOS ---------- */
-/* Peñaloza: Envoltorio que permite desplazar la tabla horizontalmente en pantallas pequeñas
+/* Alprox9: ---------- 6. TABLAS DE DATOS ---------- */
+/* Alprox9: Envoltorio que permite desplazar la tabla horizontalmente en pantallas pequeñas
    sin romper el diseño de toda la página. */
 .tabla-contenedor {
     overflow-x: auto;
@@ -164,7 +164,7 @@ body {
     border-radius: 10px;
 }
 
-/* Peñaloza: Tabla de datos: ocupa todo el ancho y une los bordes de las celdas. */
+/* Alprox9: Tabla de datos: ocupa todo el ancho y une los bordes de las celdas. */
 .tabla-datos {
     width: 100%;
     border-collapse: collapse;
@@ -179,13 +179,13 @@ body {
     white-space: nowrap;
 }
 
-/* Peñaloza: Fila de títulos de columna. */
+/* Alprox9: Fila de títulos de columna. */
 .tabla-datos thead th {
     background: var(--color-principal);
     color: #ffffff;
 }
 
-/* Peñaloza: Filas alternadas y resaltado al pasar el cursor, para leer mejor. */
+/* Alprox9: Filas alternadas y resaltado al pasar el cursor, para leer mejor. */
 .tabla-datos tbody tr:nth-child(even) {
     background: #fff3e4;
 }
@@ -194,7 +194,7 @@ body {
     background: #ffe8cc;
 }
 
-/* Peñaloza: Mensaje que ocupa toda la fila cuando no hay datos o falló la carga. */
+/* Alprox9: Mensaje que ocupa toda la fila cuando no hay datos o falló la carga. */
 .tabla-datos .fila-mensaje td {
     padding: 24px;
     color: var(--color-texto-suave);
@@ -202,15 +202,15 @@ body {
     white-space: normal;
 }
 
-/* Peñaloza: Variante centrada, usada en la pantalla "Leer registro". */
+/* Alprox9: Variante centrada, usada en la pantalla "Leer registro". */
 .tabla-centrada th,
 .tabla-centrada td {
     text-align: center;
 }
 
 
-/* ---------- 7. ACCIONES DENTRO DE LAS FILAS ---------- */
-/* Peñaloza: Los botones de cada fila NO están en el HTML: los genera PHP
+/* Alprox9: ---------- 7. ACCIONES DENTRO DE LAS FILAS ---------- */
+/* Alprox9: Los botones de cada fila NO están en el HTML: los genera PHP
    (consultasDueño.php y consultasmascotas.php) dentro de un <details> con
    "Opciones", y el orden es siempre Ver, Editar, Eliminar. Por eso se estilizan
    aquí por posición. Si PHP cambia ese orden, hay que ajustar los nth-of-type. */
@@ -239,12 +239,12 @@ body {
     background: #fde9d6;
 }
 
-/* Peñaloza: Iconos agregados con CSS (así el PHP no necesita cambios). */
+/* Alprox9: Iconos agregados con CSS (así el PHP no necesita cambios). */
 .tabla-datos details button:nth-of-type(1)::before { content: "📖 "; } /* Ver */
 .tabla-datos details button:nth-of-type(2)::before { content: "🔄 "; } /* Editar */
 .tabla-datos details button:nth-of-type(3)::before { content: "🗑️ "; } /* Eliminar */
 
-/* Peñaloza: El botón de eliminar se pinta en rojo para advertir que borra datos. */
+/* Alprox9: El botón de eliminar se pinta en rojo para advertir que borra datos. */
 .tabla-datos details button:nth-of-type(3) {
     border-color: var(--color-peligro);
     color: var(--color-peligro);
@@ -255,8 +255,8 @@ body {
 }
 
 
-/* ---------- 8. FORMULARIOS ---------- */
-/* Peñaloza: Los campos se acomodan en una cuadrícula que se adapta al ancho disponible:
+/* Alprox9: ---------- 8. FORMULARIOS ---------- */
+/* Alprox9: Los campos se acomodan en una cuadrícula que se adapta al ancho disponible:
    en pantallas grandes quedan varios por fila y en celulares uno debajo de otro. */
 .formulario {
     display: grid;
@@ -264,7 +264,7 @@ body {
     gap: 16px;
 }
 
-/* Peñaloza: Un campo = etiqueta (label) arriba + control (input/select) abajo. */
+/* Alprox9: Un campo = etiqueta (label) arriba + control (input/select) abajo. */
 .campo {
     display: flex;
     flex-direction: column;
@@ -285,21 +285,21 @@ body {
     font: inherit;
 }
 
-/* Peñaloza: Resalta el campo que el usuario está escribiendo. */
+/* Alprox9: Resalta el campo que el usuario está escribiendo. */
 .campo input:focus,
 .campo select:focus {
     border-color: var(--color-secundario);
     outline: 3px solid rgba(42, 157, 143, 0.3);
 }
 
-/* Peñaloza: Campo de solo lectura (el ID): se ve apagado para indicar que no se puede editar. */
+/* Alprox9: Campo de solo lectura (el ID): se ve apagado para indicar que no se puede editar. */
 .campo input[readonly] {
     background: #f0e9df;
     color: var(--color-texto-suave);
     cursor: not-allowed;
 }
 
-/* Peñaloza: Zona de botones del formulario: ocupa toda la fila y los centra. */
+/* Alprox9: Zona de botones del formulario: ocupa toda la fila y los centra. */
 .acciones-formulario {
     grid-column: 1 / -1;
     display: flex;
@@ -309,7 +309,7 @@ body {
     margin-top: 8px;
 }
 
-/* Peñaloza: Nota aclaratoria que ocupa toda la fila de la cuadrícula. */
+/* Alprox9: Nota aclaratoria que ocupa toda la fila de la cuadrícula. */
 .nota {
     grid-column: 1 / -1;
     margin: 0;
@@ -318,8 +318,8 @@ body {
 }
 
 
-/* ---------- 9. PANTALLA DE INICIO (index.html) ---------- */
-/* Peñaloza: Distribución del inicio: [foto perro] [botones] [foto gato]. */
+/* Alprox9: ---------- 9. PANTALLA DE INICIO (index.html) ---------- */
+/* Alprox9: Distribución del inicio: [foto perro] [botones] [foto gato]. */
 .portada {
     display: flex;
     flex-wrap: wrap;
@@ -329,7 +329,7 @@ body {
     margin-top: 28px;
 }
 
-/* Peñaloza: Recuadros con el perro y el gato. Son emojis grandes dentro de un marco;
+/* Alprox9: Recuadros con el perro y el gato. Son emojis grandes dentro de un marco;
    si el equipo quiere fotos reales, se reemplaza el emoji por una etiqueta <img>. */
 .marco-mascota {
     display: flex;
@@ -343,7 +343,7 @@ body {
     font-size: 5.5rem;
 }
 
-/* Peñaloza: Columna de botones del centro (Dueños, Mascotas, Citas). */
+/* Alprox9: Columna de botones del centro (Dueños, Mascotas, Citas). */
 .menu-principal {
     display: flex;
     flex-direction: column;
@@ -356,8 +356,8 @@ body {
 }
 
 
-/* ---------- 10. ADAPTACIÓN A CELULARES ---------- */
-/* Peñaloza: En pantallas angostas la barra superior pasa a una sola columna
+/* Alprox9: ---------- 10. ADAPTACIÓN A CELULARES ---------- */
+/* Alprox9: En pantallas angostas la barra superior pasa a una sola columna
    y los botones del inicio se muestran primero, arriba de los dibujos. */
 @media (max-width: 640px) {
     .contenedor {

@@ -1,4 +1,4 @@
-<?php //Por: Diego Carballo
+<?php // diegoCar09: Valida el ID y solicita al módulo compartido el detalle de una cita.
 // Importa las funciones compartidas para consultar la base de datos e imprimir las tablas.
 require_once __DIR__ . '/funcionesCita.php';
 

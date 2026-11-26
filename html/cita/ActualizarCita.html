@@ -1,19 +1,19 @@
-<!-- tecprime: Documento HTML con el formulario para modificar una cita existente con confirmación previa. Por: Diego Carballo -->
+<!-- diegoCar09: Documento HTML con el formulario para modificar una cita existente con confirmación previa. -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <!-- tecprime: Configura la codificación, la adaptación a móviles y el título de la página. -->
+    <!-- diegoCar09: Configura la codificación, la adaptación a móviles y el título de la página. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar cita - Veterinaria Pola y Maní</title>
 
-    <!-- tecprime: Enlaza la hoja de estilos compartida subiendo dos niveles desde html/cita/. -->
+    <!-- diegoCar09: Enlaza la hoja de estilos compartida subiendo dos niveles desde html/cita/. -->
     <link rel="stylesheet" href="../../css/index.css">
 </head>
 <body>
-    <!-- tecprime: Contenedor principal centrado con el ancho estándar del diseño de referencia. -->
+    <!-- diegoCar09: Contenedor principal centrado con el ancho estándar del diseño de referencia. -->
     <main class="contenedor">
-        <!-- tecprime: Encabezado centrado con las huellitas inclinadas a ambos lados del título. -->
+        <!-- diegoCar09: Encabezado centrado con las huellitas inclinadas a ambos lados del título. -->
         <header class="encabezado">
             <h1>
                 <span class="huella" aria-hidden="true">🐾</span>
@@ -21,19 +21,19 @@
                 <span class="huella" aria-hidden="true">🐾</span>
             </h1>
 
-            <!-- tecprime: Subtítulo que muestra los nombres de la mascota y el dueño asociados al cargar los datos. -->
+            <!-- diegoCar09: Subtítulo que muestra los nombres de la mascota y el dueño asociados al cargar los datos. -->
             <p id="info-relacionada" class="subtitulo" style="display: none;">
                 <strong>Mascota:</strong> <span id="nombre-mascota"></span> |
                 <strong>Dueño:</strong> <span id="nombre-dueno"></span>
             </p>
         </header>
 
-        <!-- tecprime: Párrafo dinámico para mostrar mensajes de carga, confirmación o error. -->
+        <!-- diegoCar09: Párrafo dinámico para mostrar mensajes de carga, confirmación o error. -->
         <p id="mensaje-estado" class="subtitulo" role="status" style="text-align: center; margin-bottom: 16px;">Cargando datos de la cita...</p>
 
-        <!-- tecprime: Formulario en cuadrícula adaptable (.formulario) oculto hasta que PHP devuelva los datos actuales. -->
+        <!-- diegoCar09: Formulario en cuadrícula adaptable (.formulario) oculto hasta que PHP devuelva los datos actuales. -->
         <form id="form-actualizar-cita" class="formulario" style="display: none;">
-            <!-- tecprime: Campo bloqueado (readonly) para mostrar el ID de la cita sin permitir editarlo. -->
+            <!-- diegoCar09: Campo bloqueado (readonly) para mostrar el ID de la cita sin permitir editarlo. -->
             <div class="campo">
                 <label for="ID_Cita">ID Cita</label>
                 <input type="text" id="ID_Cita" name="ID_Cita" readonly>
@@ -50,19 +50,19 @@
            </div>
 
 
-            <!-- tecprime: Selector de calendario para cambiar la fecha de la cita. -->
+            <!-- diegoCar09: Selector de calendario para cambiar la fecha de la cita. -->
             <div class="campo">
                 <label for="Fecha">Fecha</label>
                 <input type="date" id="Fecha" name="Fecha" required>
             </div>
 
-            <!-- tecprime: Selector de reloj para cambiar la hora programada. -->
+            <!-- diegoCar09: Selector de reloj para cambiar la hora programada. -->
             <div class="campo">
                 <label for="Hora">Hora</label>
                 <input type="time" id="Hora" name="Hora" required>
             </div>
 
-            <!-- tecprime: Lista desplegable con los estados válidos de una cita. -->
+            <!-- diegoCar09: Lista desplegable con los estados válidos de una cita. -->
             <div class="campo">
                 <label for="Estado">Estado</label>
                 <select id="Estado" name="Estado" required>
@@ -74,7 +74,7 @@
                 </select>
             </div>
 
-            <!-- tecprime: Barra inferior centrada con los tres botones del diseño: Reiniciar, Guardar cambios y Volver. -->
+            <!-- diegoCar09: Barra inferior centrada con los tres botones del diseño: Reiniciar, Guardar cambios y Volver. -->
             <div class="acciones-formulario">
                 <button type="button" id="btn-reiniciar" class="boton boton-secundario">Reiniciar</button>
                 <button type="submit" class="boton">Guardar cambios</button>
@@ -83,19 +83,19 @@
         </form>
     </main>
 
-    <!-- tecprime: Script que carga los datos iniciales (GET), restaura valores y envía los cambios (POST) con confirmación. -->
+    <!-- diegoCar09: Script que carga los datos iniciales (GET), restaura valores y envía los cambios (POST) con confirmación. -->
     <script>
-        // tecprime: Extrae los parámetros de búsqueda de la URL actual y obtiene el valor de 'id'.
+        // diegoCar09: Extrae los parámetros de búsqueda de la URL actual y obtiene el valor de 'id'.
         var parametros = new URLSearchParams(window.location.search);
         var id = parametros.get('id');
 
-        // tecprime: Guarda las referencias a los elementos del DOM que cambiarán de estado o visibilidad.
+        // diegoCar09: Guarda las referencias a los elementos del DOM que cambiarán de estado o visibilidad.
         var mensajeEstado = document.getElementById('mensaje-estado');
         var formulario = document.getElementById('form-actualizar-cita');
         var infoRelacionada = document.getElementById('info-relacionada');
         var datosOriginales = null;
 
-        // tecprime: Función auxiliar que asigna a cada campo del formulario los valores de un objeto de cita.
+        // diegoCar09: Función auxiliar que asigna a cada campo del formulario los valores de un objeto de cita.
         function rellenarFormulario(c) {
             document.getElementById('ID_Cita').value = c.ID_Cita;
             document.getElementById('ID_Mascota').value = c.ID_Mascota;
@@ -105,7 +105,7 @@
             document.getElementById('Estado').value = c.Estado;
         }
 
-        // tecprime: Verifica que exista un ID válido en la barra de direcciones antes de consultar al servidor.
+        // diegoCar09: Verifica que exista un ID válido en la barra de direcciones antes de consultar al servidor.
         if (!id) 
         {
             mensajeEstado.textContent = 'Se requiere un ID de cita válido.';
@@ -113,14 +113,14 @@
         
         else 
         {
-            // tecprime: Actualiza el título principal para indicar el número de cita que se está editando.
+            // diegoCar09: Actualiza el título principal para indicar el número de cita que se está editando.
             document.getElementById('titulo-editar').textContent = 'Editar cita #' + id;
 
-            // tecprime: Petición GET: Solicita los datos actuales de la cita en formato JSON a actualizarCita.php.
+            // diegoCar09: Petición GET: Solicita los datos actuales de la cita en formato JSON a actualizarCita.php.
             fetch('../../php/cita/actualizarCita.php?id=' + encodeURIComponent(id))
-                // tecprime: Convierte la respuesta HTTP recibida del servidor a un objeto JSON.
+                // diegoCar09: Convierte la respuesta HTTP recibida del servidor a un objeto JSON.
                 .then(function (respuesta) { return respuesta.json(); })
-                // tecprime: Valida si se encontró la cita, guarda una copia original y rellena el formulario.
+                // diegoCar09: Valida si se encontró la cita, guarda una copia original y rellena el formulario.
                 .then(function (datos) {
                     if (!datos.exito) 
                     {
@@ -128,24 +128,24 @@
                         return;
                     }
 
-                    // tecprime: Almacena los datos originales por si el usuario presiona el botón "Reiniciar".
+                    // diegoCar09: Almacena los datos originales por si el usuario presiona el botón "Reiniciar".
                     datosOriginales = datos.cita;
                     rellenarFormulario(datosOriginales);
 
-                    // tecprime: Muestra los nombres de la mascota y el dueño asociados en el subtítulo superior.
+                    // diegoCar09: Muestra los nombres de la mascota y el dueño asociados en el subtítulo superior.
                     document.getElementById('nombre-mascota').textContent = datosOriginales.NombreMascota || 'Sin nombre';
                     document.getElementById('nombre-dueno').textContent = ((datosOriginales.NombreDueno || '') + ' ' + (datosOriginales.ApellidosDueno || '')).trim();
 
-                    // tecprime: Oculta el aviso de carga y muestra el subtítulo y el formulario en cuadrícula.
+                    // diegoCar09: Oculta el aviso de carga y muestra el subtítulo y el formulario en cuadrícula.
                     mensajeEstado.style.display = 'none';
                     infoRelacionada.style.display = 'block';
                     formulario.style.display = 'grid';
                 })
-                // tecprime: Muestra un mensaje de error si falla la conexión o la lectura del JSON inicial.
+                // diegoCar09: Muestra un mensaje de error si falla la conexión o la lectura del JSON inicial.
                 .catch(function () { mensajeEstado.textContent = 'Error de conexión al cargar los datos de la cita.'; });
         }
 
-        // tecprime: Evento click en "Reiniciar": Devuelve todos los campos del formulario a su estado original.
+        // diegoCar09: Evento click en "Reiniciar": Devuelve todos los campos del formulario a su estado original.
         document.getElementById('btn-reiniciar').addEventListener('click', function () {
             if (datosOriginales) 
             {
@@ -154,43 +154,43 @@
             }
         });
 
-        // tecprime: Evento submit: Intercepta el envío del formulario para pedir confirmación y guardar vía POST.
+        // diegoCar09: Evento submit: Intercepta el envío del formulario para pedir confirmación y guardar vía POST.
         formulario.addEventListener('submit', function (evento) {
-            // tecprime: Evita que el navegador recargue la página de forma tradicional.
+            // diegoCar09: Evita que el navegador recargue la página de forma tradicional.
             evento.preventDefault();
 
-            // tecprime: Captura los valores actuales escritos en los campos para construir el resumen.
+            // diegoCar09: Captura los valores actuales escritos en los campos para construir el resumen.
             var idMascota = document.getElementById('ID_Mascota').value.trim();
             var idDueno = document.getElementById('ID_Dueno').value.trim();
             var fecha = document.getElementById('Fecha').value;
             var hora = document.getElementById('Hora').value;
             var estado = document.getElementById('Estado').value;
 
-            // tecprime: Prepara el texto de la ventana emergente con los datos que se van a guardar.
+            // diegoCar09: Prepara el texto de la ventana emergente con los datos que se van a guardar.
               var resumen = '¿Deseas guardar los cambios de la cita #' + id + '?\n\n' +
               '• Fecha: ' + fecha + '\n' +
               '• Hora: ' + hora + '\n' +
               '• Estado: ' + estado;
 
-            // tecprime: Si el usuario pulsa "Cancelar" en la ventana emergente, detiene el envío.
+            // diegoCar09: Si el usuario pulsa "Cancelar" en la ventana emergente, detiene el envío.
             if (!confirm(resumen)) 
             {
                 return;
             }
 
-            // tecprime: Empaqueta todos los datos del formulario en un objeto FormData para enviarlos al servidor.
+            // diegoCar09: Empaqueta todos los datos del formulario en un objeto FormData para enviarlos al servidor.
             var formData = new FormData(formulario);
 
-            // tecprime: Petición POST: Envía los cambios a actualizarCita.php para actualizar el registro en MySQL.
+            // diegoCar09: Petición POST: Envía los cambios a actualizarCita.php para actualizar el registro en MySQL.
             fetch('../../php/cita/actualizarCita.php?id=' + encodeURIComponent(id), { method: 'POST', body: formData })
-            // tecprime: Convierte la respuesta del servidor de formato JSON a un objeto de JavaScript.
+            // diegoCar09: Convierte la respuesta del servidor de formato JSON a un objeto de JavaScript.
             .then(function (respuesta) { return respuesta.json(); })
-            // tecprime: Muestra en pantalla el resultado de la operación y actualiza la copia original en memoria.
+            // diegoCar09: Muestra en pantalla el resultado de la operación y actualiza la copia original en memoria.
             .then(function (datos) {
                 mensajeEstado.style.display = 'block';
                 mensajeEstado.textContent = datos.mensaje;
 
-                // tecprime: Si el guardado fue exitoso, actualiza datosOriginales con los nuevos valores guardados.
+                // diegoCar09: Si el guardado fue exitoso, actualiza datosOriginales con los nuevos valores guardados.
                 if (datos.exito && datosOriginales) 
                 {
                     datosOriginales.ID_Mascota = idMascota;
@@ -200,7 +200,7 @@
                     datosOriginales.Estado = estado;
                 }
             })
-            // tecprime: Muestra un mensaje de fallo si se pierde la conexión al intentar guardar los cambios.
+            // diegoCar09: Muestra un mensaje de fallo si se pierde la conexión al intentar guardar los cambios.
             .catch(function () {
                 mensajeEstado.style.display = 'block';
                 mensajeEstado.textContent = 'Error de conexión al guardar los cambios.';

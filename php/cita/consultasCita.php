@@ -1,4 +1,4 @@
-<?php //Por: Diego Carballo
+<?php // diegoCar09: Genera el listado de citas o el detalle solicitado mediante su ID.
 // Importa las funciones compartidas de conexión, escape y consulta de citas.
 require_once __DIR__ . '/funcionesCita.php';
 

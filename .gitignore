@@ -1,2 +1,2 @@
-# Gael: Evita incluir en Git el archivo local de conexión y su configuración sensible.
+# tecslime: Evita incluir en Git el archivo local de conexión y su configuración sensible.
 /php/conexion.php

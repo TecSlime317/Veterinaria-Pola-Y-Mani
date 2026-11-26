@@ -1,4 +1,5 @@
 <?php
+// awa123691: Recibe los campos del formulario y prepara la conexión y la sentencia INSERT para Mascota.
 require_once __DIR__ . '/../conexion.php';
 $_Nombre = $_POST['Nombre'];
 $_Genero = $_POST['Genero'];
