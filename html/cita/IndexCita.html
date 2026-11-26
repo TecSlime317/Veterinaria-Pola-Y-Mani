@@ -56,77 +56,58 @@
         </div>
     </main>
 
-    <!-- diegoCar09: Solicita al endpoint PHP las filas de citas, las inserta en la tabla y atiende los botones de cada fila. -->
+    <!-- diegoCar09: Solicita al endpoint PHP las filas de citas y gestiona la eliminación mediante fetch. -->
     <script>
-        // diegoCar09: Guarda la referencia al cuerpo de la tabla (<tbody>) donde se insertarán las filas dinámicas.
         var cuerpoTabla = document.getElementById('tablacita');
 
-        // tecslime: La petición inicial obtiene el HTML de las citas; esta parte de carga base aparece en Git atribuida a tecslime.
+        // tecslime: Petición fetch inicial para cargar las filas HTML desde consultasCita.php.
         fetch('../../php/cita/consultasCita.php')
-            // diegoCar09: Primera promesa: verifica que la respuesta HTTP sea exitosa (código 200-299) y la convierte a texto.
             .then(function (respuesta) {
-                if (!respuesta.ok) 
-                {
+                if (!respuesta.ok) {
                     throw new Error('Respuesta HTTP ' + respuesta.status);
                 }
                 return respuesta.text();
             })
-            // diegoCar09: Segunda promesa: inserta las filas recibidas en la tabla, o muestra un aviso si el resultado está vacío.
             .then(function (filas) {
-                if (filas.trim() === '') 
-                {
+                if (filas.trim() === '') {
                     cuerpoTabla.innerHTML = '<tr class="fila-mensaje"><td colspan="7">No hay citas registradas.</td></tr>';
-                } 
-                
-                else 
-                {
+                } else {
                     cuerpoTabla.innerHTML = filas;
                 }
             })
-            // diegoCar09: Captura cualquier error de red o fallo HTTP y muestra el detalle dentro de la tabla.
             .catch(function (error) {
                 cuerpoTabla.innerHTML = '<tr class="fila-mensaje"><td colspan="7">No se pudieron cargar las citas (' + error.message + ').</td></tr>';
             });
 
-        // diegoCar09: Maneja los botones que PHP agrega dinámicamente, incluida la eliminación confirmada de una cita.
+        // diegoCar09: Pide confirmación emergente y envía por fetch la orden de eliminación al pulsar Eliminar.
         cuerpoTabla.addEventListener('click', function (evento) {
-            // diegoCar09: Comprueba si el elemento pulsado (o alguno de sus padres) corresponde al botón de eliminar.
             var botonEliminar = evento.target.closest('.boton-eliminar');
-            if (!botonEliminar) 
-            {
+            if (!botonEliminar) {
                 return;
             }
 
-            // diegoCar09: Obtiene el ID de la cita almacenado en el atributo personalizado "data-id" del botón.
             var id = botonEliminar.getAttribute('data-id');
 
-            // diegoCar09: Muestra una ventana de confirmación antes de enviar la orden de borrado al servidor.
-            if (confirm('¿Seguro que deseas eliminar la cita con ID ' + id + '? Esta acción no se puede deshacer.')) 
-            {
-                // diegoCar09: Envía una petición POST a funcionesCita.php indicando la acción 'eliminar' y el ID de la cita.
-                fetch('../../php/cita/funcionesCita.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: 'accion=eliminar&id=' + encodeURIComponent(id)
-                })
-                // diegoCar09: Convierte la respuesta del servidor de formato JSON a un objeto de JavaScript.
-                .then(function (respuesta) { return respuesta.json(); })
-                // diegoCar09: Si la eliminación fue exitosa en la base de datos, elimina la fila visualmente de la tabla.
-                .then(function (datos) {
-                    if (datos.exito) 
-                    {
-                        botonEliminar.closest('tr').remove();
-                        alert(datos.mensaje);
-                    } 
-                    
-                    else 
-                    {
-                        alert('No se pudo eliminar: ' + datos.mensaje);
-                    }
-                })
-                // diegoCar09: Maneja posibles fallos de conexión o errores al procesar la respuesta JSON del servidor.
-                .catch(function () { alert('Error de conexión al intentar eliminar la cita.'); });
+            // diegoCar09: Aviso emergente de confirmación antes de borrar el registro.
+            if (!confirm('¿Seguro que deseas eliminar la cita con ID ' + id + '? Esta acción no se puede deshacer.')) {
+                return;
             }
+
+            fetch('../../php/cita/funcionesCita.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'accion=eliminar&id=' + encodeURIComponent(id)
+            })
+            .then(function (respuesta) { return respuesta.json(); })
+            .then(function (datos) {
+                if (datos.exito) {
+                    botonEliminar.closest('tr').remove();
+                    alert(datos.mensaje);
+                } else {
+                    alert(datos.mensaje);
+                }
+            })
+            .catch(function () { alert('Error de conexión al intentar eliminar la cita.'); });
         });
     </script>
 </body>

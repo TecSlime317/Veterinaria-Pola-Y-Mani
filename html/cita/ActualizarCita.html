@@ -1,4 +1,4 @@
-<!-- diegoCar09: Documento HTML con el formulario para modificar una cita existente con confirmación previa. -->
+<!-- diegoCar09: Documento HTML simplificado para editar una cita manteniendo únicamente los procesos fetch. -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -39,16 +39,17 @@
                 <input type="text" id="ID_Cita" name="ID_Cita" readonly>
             </div>
 
+            <!-- diegoCar09: Campo bloqueado (readonly) para conservar el ID de la mascota sin permitir editarlo. -->
             <div class="campo">
                 <label for="ID_Mascota">ID Mascota</label>
                 <input type="text" id="ID_Mascota" name="ID_Mascota" readonly>
             </div>
 
-           <div class="campo">
+            <!-- diegoCar09: Campo bloqueado (readonly) para conservar el ID del dueño sin permitir editarlo. -->
+            <div class="campo">
                 <label for="ID_Dueno">ID Dueño</label>
                 <input type="text" id="ID_Dueno" name="ID_Dueno" readonly>
-           </div>
-
+            </div>
 
             <!-- diegoCar09: Selector de calendario para cambiar la fecha de la cita. -->
             <div class="campo">
@@ -74,133 +75,69 @@
                 </select>
             </div>
 
-            <!-- diegoCar09: Barra inferior centrada con los tres botones del diseño: Reiniciar, Guardar cambios y Volver. -->
+            <!-- diegoCar09: Barra inferior centrada con botones HTML nativos: Reiniciar (type="reset"), Guardar cambios y Volver. -->
             <div class="acciones-formulario">
-                <button type="button" id="btn-reiniciar" class="boton boton-secundario">Reiniciar</button>
+                <button type="reset" class="boton boton-secundario">Reiniciar</button>
                 <button type="submit" class="boton">Guardar cambios</button>
                 <a class="boton boton-secundario" href="IndexCita.html">Volver</a>
             </div>
         </form>
     </main>
 
-    <!-- diegoCar09: Script que carga los datos iniciales (GET), restaura valores y envía los cambios (POST) con confirmación. -->
+    <!-- diegoCar09: Script reducido estrictamente a los dos procesos fetch (cargar datos iniciales y enviar cambios). -->
     <script>
-        // diegoCar09: Extrae los parámetros de búsqueda de la URL actual y obtiene el valor de 'id'.
-        var parametros = new URLSearchParams(window.location.search);
-        var id = parametros.get('id');
-
-        // diegoCar09: Guarda las referencias a los elementos del DOM que cambiarán de estado o visibilidad.
+        var id = new URLSearchParams(window.location.search).get('id');
         var mensajeEstado = document.getElementById('mensaje-estado');
         var formulario = document.getElementById('form-actualizar-cita');
         var infoRelacionada = document.getElementById('info-relacionada');
-        var datosOriginales = null;
 
-        // diegoCar09: Función auxiliar que asigna a cada campo del formulario los valores de un objeto de cita.
-        function rellenarFormulario(c) {
-            document.getElementById('ID_Cita').value = c.ID_Cita;
-            document.getElementById('ID_Mascota').value = c.ID_Mascota;
-            document.getElementById('ID_Dueno').value = c.ID_Dueno;
-            document.getElementById('Fecha').value = c.Fecha;
-            document.getElementById('Hora').value = c.Hora;
-            document.getElementById('Estado').value = c.Estado;
-        }
-
-        // diegoCar09: Verifica que exista un ID válido en la barra de direcciones antes de consultar al servidor.
-        if (!id) 
-        {
+        if (!id) {
             mensajeEstado.textContent = 'Se requiere un ID de cita válido.';
-        } 
-        
-        else 
-        {
-            // diegoCar09: Actualiza el título principal para indicar el número de cita que se está editando.
+        } else {
             document.getElementById('titulo-editar').textContent = 'Editar cita #' + id;
 
-            // diegoCar09: Petición GET: Solicita los datos actuales de la cita en formato JSON a actualizarCita.php.
+            // diegoCar09: Primer fetch (GET): Obtiene los datos actuales de la cita desde actualizarCita.php.
             fetch('../../php/cita/actualizarCita.php?id=' + encodeURIComponent(id))
-                // diegoCar09: Convierte la respuesta HTTP recibida del servidor a un objeto JSON.
                 .then(function (respuesta) { return respuesta.json(); })
-                // diegoCar09: Valida si se encontró la cita, guarda una copia original y rellena el formulario.
                 .then(function (datos) {
-                    if (!datos.exito) 
-                    {
+                    if (!datos.exito) {
                         mensajeEstado.textContent = datos.mensaje;
                         return;
                     }
 
-                    // diegoCar09: Almacena los datos originales por si el usuario presiona el botón "Reiniciar".
-                    datosOriginales = datos.cita;
-                    rellenarFormulario(datosOriginales);
+                    // diegoCar09: Asigna defaultValue para que el botón HTML nativo type="reset" restaure estos valores sin JS.
+                    var c = datos.cita;
+                    document.getElementById('ID_Cita').defaultValue = c.ID_Cita;
+                    document.getElementById('ID_Mascota').defaultValue = c.ID_Mascota;
+                    document.getElementById('ID_Dueno').defaultValue = c.ID_Dueno;
+                    document.getElementById('Fecha').defaultValue = c.Fecha;
+                    document.getElementById('Hora').defaultValue = c.Hora;
+                    document.getElementById('Estado').value = c.Estado;
+                    document.querySelector('#Estado option[value="' + c.Estado + '"]').defaultSelected = true;
 
-                    // diegoCar09: Muestra los nombres de la mascota y el dueño asociados en el subtítulo superior.
-                    document.getElementById('nombre-mascota').textContent = datosOriginales.NombreMascota || 'Sin nombre';
-                    document.getElementById('nombre-dueno').textContent = ((datosOriginales.NombreDueno || '') + ' ' + (datosOriginales.ApellidosDueno || '')).trim();
+                    document.getElementById('nombre-mascota').textContent = c.NombreMascota || 'Sin nombre';
+                    document.getElementById('nombre-dueno').textContent = ((c.NombreDueno || '') + ' ' + (c.ApellidosDueno || '')).trim();
 
-                    // diegoCar09: Oculta el aviso de carga y muestra el subtítulo y el formulario en cuadrícula.
                     mensajeEstado.style.display = 'none';
                     infoRelacionada.style.display = 'block';
                     formulario.style.display = 'grid';
                 })
-                // diegoCar09: Muestra un mensaje de error si falla la conexión o la lectura del JSON inicial.
                 .catch(function () { mensajeEstado.textContent = 'Error de conexión al cargar los datos de la cita.'; });
         }
 
-        // diegoCar09: Evento click en "Reiniciar": Devuelve todos los campos del formulario a su estado original.
-        document.getElementById('btn-reiniciar').addEventListener('click', function () {
-            if (datosOriginales) 
-            {
-                rellenarFormulario(datosOriginales);
-                mensajeEstado.style.display = 'none';
-            }
-        });
-
-        // diegoCar09: Evento submit: Intercepta el envío del formulario para pedir confirmación y guardar vía POST.
+        // diegoCar09: Segundo fetch (POST): Envía los cambios del formulario a actualizarCita.php para guardarlos en MySQL.
         formulario.addEventListener('submit', function (evento) {
-            // diegoCar09: Evita que el navegador recargue la página de forma tradicional.
             evento.preventDefault();
 
-            // diegoCar09: Captura los valores actuales escritos en los campos para construir el resumen.
-            var idMascota = document.getElementById('ID_Mascota').value.trim();
-            var idDueno = document.getElementById('ID_Dueno').value.trim();
-            var fecha = document.getElementById('Fecha').value;
-            var hora = document.getElementById('Hora').value;
-            var estado = document.getElementById('Estado').value;
-
-            // diegoCar09: Prepara el texto de la ventana emergente con los datos que se van a guardar.
-              var resumen = '¿Deseas guardar los cambios de la cita #' + id + '?\n\n' +
-              '• Fecha: ' + fecha + '\n' +
-              '• Hora: ' + hora + '\n' +
-              '• Estado: ' + estado;
-
-            // diegoCar09: Si el usuario pulsa "Cancelar" en la ventana emergente, detiene el envío.
-            if (!confirm(resumen)) 
-            {
-                return;
-            }
-
-            // diegoCar09: Empaqueta todos los datos del formulario en un objeto FormData para enviarlos al servidor.
-            var formData = new FormData(formulario);
-
-            // diegoCar09: Petición POST: Envía los cambios a actualizarCita.php para actualizar el registro en MySQL.
-            fetch('../../php/cita/actualizarCita.php?id=' + encodeURIComponent(id), { method: 'POST', body: formData })
-            // diegoCar09: Convierte la respuesta del servidor de formato JSON a un objeto de JavaScript.
+            fetch('../../php/cita/actualizarCita.php?id=' + encodeURIComponent(id), {
+                method: 'POST',
+                body: new FormData(formulario)
+            })
             .then(function (respuesta) { return respuesta.json(); })
-            // diegoCar09: Muestra en pantalla el resultado de la operación y actualiza la copia original en memoria.
             .then(function (datos) {
                 mensajeEstado.style.display = 'block';
                 mensajeEstado.textContent = datos.mensaje;
-
-                // diegoCar09: Si el guardado fue exitoso, actualiza datosOriginales con los nuevos valores guardados.
-                if (datos.exito && datosOriginales) 
-                {
-                    datosOriginales.ID_Mascota = idMascota;
-                    datosOriginales.ID_Dueno = idDueno;
-                    datosOriginales.Fecha = fecha;
-                    datosOriginales.Hora = hora;
-                    datosOriginales.Estado = estado;
-                }
             })
-            // diegoCar09: Muestra un mensaje de fallo si se pierde la conexión al intentar guardar los cambios.
             .catch(function () {
                 mensajeEstado.style.display = 'block';
                 mensajeEstado.textContent = 'Error de conexión al guardar los cambios.';

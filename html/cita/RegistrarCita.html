@@ -1,4 +1,4 @@
-<!-- Documento HTML con el formulario para registrar una cita nueva evitando conflictos de llaves foráneas. Por: Diego Carballo -->
+<!-- diegoCar09: Documento HTML simplificado para registrar una cita nueva conservando únicamente los procesos fetch. -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -22,12 +22,12 @@
             </h1>
         </header>
 
-        <!-- diegoCar09: Párrafo dinámico que informa al usuario durante la carga inicial o al guardar una cita. -->
+        <!-- diegoCar09: Párrafo dinámico que muestra el estado de carga o la respuesta al registrar. -->
         <p id="mensaje-estado" class="subtitulo" role="status" style="text-align: center; margin-bottom: 16px;">Cargando dueños y mascotas...</p>
 
-        <!-- diegoCar09: Formulario en cuadrícula adaptable (.formulario) para capturar los datos de la nueva cita. -->
+        <!-- diegoCar09: Formulario en cuadrícula adaptable (.formulario) con validación nativa de HTML. -->
         <form id="form-registrar-cita" class="formulario">
-            <!-- diegoCar09: Lista desplegable que mostrará todos los dueños registrados en la base de datos. -->
+            <!-- diegoCar09: Lista desplegable con todos los dueños registrados en la base de datos. -->
             <div class="campo">
                 <label for="ID_Dueno">Dueño *</label>
                 <select id="ID_Dueno" name="ID_Dueno" required>
@@ -35,11 +35,11 @@
                 </select>
             </div>
 
-            <!-- diegoCar09: Lista desplegable deshabilitada inicialmente hasta que se seleccione un dueño. -->
+            <!-- diegoCar09: Lista desplegable con todas las mascotas registradas indicando el ID de su dueño. -->
             <div class="campo">
                 <label for="ID_Mascota">Mascota *</label>
-                <select id="ID_Mascota" name="ID_Mascota" required disabled>
-                    <option value="" disabled selected>Primero elige un dueño...</option>
+                <select id="ID_Mascota" name="ID_Mascota" required>
+                    <option value="" disabled selected>Selecciona una mascota...</option>
                 </select>
             </div>
 
@@ -68,168 +68,75 @@
             </div>
 
             <!-- diegoCar09: Nota aclaratoria que ocupa toda la fila inferior de la cuadrícula (.nota). -->
-            <p class="nota">El ID de la cita se genera automáticamente. Selecciona un dueño para ver sus mascotas asociadas.</p>
+            <p class="nota">El ID de la cita se genera automáticamente. Verifica que la mascota corresponda al dueño seleccionado.</p>
 
-            <!-- diegoCar09: Barra inferior centrada con los tres botones: Reiniciar, Registrar y Volver. -->
+            <!-- diegoCar09: Barra inferior centrada con botones HTML nativos: Reiniciar, Registrar y Volver. -->
             <div class="acciones-formulario">
-                <button type="reset" id="btn-reiniciar" class="boton boton-secundario">Reiniciar</button>
+                <button type="reset" class="boton boton-secundario">Reiniciar</button>
                 <button type="submit" class="boton">Registrar</button>
                 <a class="boton boton-secundario" href="IndexCita.html">Volver</a>
             </div>
         </form>
     </main>
 
-    <!-- diegoCar09: Script que carga dueños y mascotas (GET), filtra mascotas por dueño y registra la cita (POST). -->
+    <!-- diegoCar09: Script reducido estrictamente a los dos procesos fetch (cargar listas y enviar registro). -->
     <script>
-        // diegoCar09: Guarda las referencias a los elementos del DOM que cambiarán dinámicamente.
         var selectDueno = document.getElementById('ID_Dueno');
         var selectMascota = document.getElementById('ID_Mascota');
         var formulario = document.getElementById('form-registrar-cita');
         var mensajeEstado = document.getElementById('mensaje-estado');
-        var listaMascotas = [];
 
-        // diegoCar09: Petición GET: Solicita al servidor las listas de dueños y mascotas existentes en formato JSON.
+        // diegoCar09: Primer fetch (GET): Obtiene dueños y mascotas desde registrarCita.php y llena ambos select.
         fetch('../../php/cita/registrarCita.php')
-            // diegoCar09: Convierte la respuesta HTTP recibida del servidor a un objeto JSON.
-            .then(function (respuesta) 
-            {
-                return respuesta.json();
-            })
-            // diegoCar09: Recorre los arreglos recibidos para llenar el selector de dueños y guardar las mascotas.
-            .then(function (datos) 
-            {
-                // diegoCar09: Si el servidor reporta un fallo, muestra el mensaje de error y detiene el proceso.
-                if (!datos.exito) 
-                {
+            .then(function (respuesta) { return respuesta.json(); })
+            .then(function (datos) {
+                if (!datos.exito) {
                     mensajeEstado.textContent = datos.mensaje;
                     return;
                 }
 
-                // diegoCar09: Crea una etiqueta <option> por cada dueño con su ID y nombre completo.
-                datos.duenos.forEach(function (dueno) 
-                {
+                datos.duenos.forEach(function (dueno) {
                     var opcion = document.createElement('option');
                     opcion.value = dueno.ID_Dueno;
                     opcion.textContent = dueno.ID_Dueno + ' - ' + dueno.Nombre + ' ' + dueno.Apellidos;
                     selectDueno.appendChild(opcion);
                 });
 
-                // diegoCar09: Almacena todas las mascotas en memoria para filtrarlas sin hacer nuevas peticiones al servidor.
-                listaMascotas = datos.mascotas;
-                // diegoCar09: Oculta el aviso de carga una vez que los datos están listos.
+                datos.mascotas.forEach(function (mascota) {
+                    var opcion = document.createElement('option');
+                    opcion.value = mascota.ID_Mascota;
+                    opcion.textContent = mascota.ID_Mascota + ' - ' + mascota.Nombre + ' (' + mascota.Especie + ') - Dueño #' + mascota.ID_Dueno;
+                    selectMascota.appendChild(opcion);
+                });
+
                 mensajeEstado.style.display = 'none';
             })
-            // diegoCar09: Captura fallos de red o de lectura JSON al intentar obtener los listados iniciales.
-            .catch(function () 
-            {
+            .catch(function () {
                 mensajeEstado.textContent = 'Error de conexión al cargar dueños y mascotas.';
             });
 
-        // diegoCar09: Evento change en Dueño: Filtra y muestra únicamente las mascotas que pertenecen al dueño elegido.
-        selectDueno.addEventListener('change', function () 
-        {
-            // diegoCar09: Obtiene el ID del dueño recién seleccionado y reinicia el selector de mascotas.
-            var idDuenoSeleccionado = selectDueno.value;
-            selectMascota.innerHTML = '<option value="" disabled selected>Selecciona una mascota...</option>';
-
-            // diegoCar09: Filtra el arreglo global comparando la llave foránea ID_Dueno de cada mascota.
-            var mascotasDelDueno = listaMascotas.filter(function (mascota) 
-            {
-                return String(mascota.ID_Dueno) === String(idDuenoSeleccionado);
-            });
-
-            // diegoCar09: Si el dueño no tiene mascotas registradas, mantiene bloqueado el segundo selector.
-            if (mascotasDelDueno.length === 0) 
-            {
-                selectMascota.innerHTML = '<option value="" disabled selected>Este dueño no tiene mascotas</option>';
-                selectMascota.disabled = true;
-            } 
-            else 
-            {
-                // diegoCar09: Agrega al selector cada mascota encontrada y habilita el campo para elegirla.
-                mascotasDelDueno.forEach(function (mascota) 
-                {
-                    var opcion = document.createElement('option');
-                    opcion.value = mascota.ID_Mascota;
-                    opcion.textContent = mascota.ID_Mascota + ' - ' + mascota.Nombre + ' (' + mascota.Especie + ')';
-                    selectMascota.appendChild(opcion);
-                });
-                selectMascota.disabled = false;
-            }
-        });
-
-        // diegoCar09: Evento reset: Restaura el selector de mascotas a su estado inicial bloqueado al limpiar el formulario.
-        formulario.addEventListener('reset', function () 
-        {
-            setTimeout(function () 
-            {
-                selectMascota.innerHTML = '<option value="" disabled selected>Primero elige un dueño...</option>';
-                selectMascota.disabled = true;
-                mensajeEstado.style.display = 'none';
-            }, 0);
-        });
-
-        // diegoCar09: Evento submit: Solicita confirmación al usuario y envía la nueva cita al servidor mediante POST.
-        formulario.addEventListener('submit', function (evento) 
-        {
-            // diegoCar09: Evita el envío tradicional del formulario para procesar la respuesta sin recargar la página.
+        // diegoCar09: Segundo fetch (POST): Envía los datos del formulario a registrarCita.php para guardar la cita.
+        formulario.addEventListener('submit', function (evento) {
             evento.preventDefault();
 
-            // diegoCar09: Obtiene los textos visibles y valores seleccionados para mostrarlos en la ventana emergente.
-            var textoDueno = selectDueno.options[selectDueno.selectedIndex].text;
-            var textoMascota = selectMascota.options[selectMascota.selectedIndex].text;
-            var fecha = document.getElementById('Fecha').value;
-            var hora = document.getElementById('Hora').value;
-            var estado = document.getElementById('Estado').value;
-
-            // diegoCar09: Construye el resumen de los datos antes de confirmar el alta en la base de datos.
-            var resumen = '¿Deseas agendar esta nueva cita?\n\n' +
-                          '• Dueño: ' + textoDueno + '\n' +
-                          '• Mascota: ' + textoMascota + '\n' +
-                          '• Fecha: ' + fecha + '\n' +
-                          '• Hora: ' + hora + '\n' +
-                          '• Estado: ' + estado;
-
-            // diegoCar09: Si el usuario cancela en el cuadro de diálogo, detiene el envío.
-            if (!confirm(resumen)) 
-            {
-                return;
-            }
-
-            // diegoCar09: Empaqueta todos los campos del formulario en un objeto FormData.
-            var formData = new FormData(formulario);
-
-            // diegoCar09: Petición POST: Envía los datos validados a registrarCita.php para insertarlos en MySQL.
             fetch('../../php/cita/registrarCita.php', {
                 method: 'POST',
-                body: formData
+                body: new FormData(formulario)
             })
-            // diegoCar09: Convierte la respuesta del servidor de formato JSON a un objeto de JavaScript.
-            .then(function (respuesta) 
-            {
-                return respuesta.json();
-            })
-            // diegoCar09: Muestra el mensaje de confirmación o error y limpia el formulario si el registro fue exitoso.
-            .then(function (datos) 
-            {
-                if (datos.exito) 
-                {
+            .then(function (respuesta) { return respuesta.json(); })
+            .then(function (datos) {
+                mensajeEstado.style.display = 'block';
+                mensajeEstado.textContent = datos.mensaje;
+
+                if (datos.exito) {
                     formulario.reset();
                 }
-
-                // diegoCar09: Se coloca al final para que el evento reset no oculte la confirmación de registro.
-                setTimeout(function () 
-                {
-                    mensajeEstado.style.display = 'block';
-                    mensajeEstado.textContent = datos.mensaje;
-                }, 10);
             })
-            // diegoCar09: Muestra un aviso si ocurre un fallo de conexión durante el envío.
-            .catch(function () 
-            {
+            .catch(function () {
                 mensajeEstado.style.display = 'block';
                 mensajeEstado.textContent = 'Error de conexión al intentar registrar la cita.';
             });
         });
     </script>
 </body>
+</html>

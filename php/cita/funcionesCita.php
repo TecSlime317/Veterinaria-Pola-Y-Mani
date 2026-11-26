@@ -1,4 +1,4 @@
-<?php // diegoCar09: Define consultas y funciones de salida para el módulo de citas.
+<?php // diegoCar09: Define consultas y funciones de salida en PHP puro para el módulo de citas.
 require_once __DIR__ . '/../conexion.php';
 
 // tecslime: Devuelve la conexión compartida configurada para el resto del sistema.
@@ -43,7 +43,6 @@ function obtenerCitas()
 }
 
 // diegoCar09: Obtiene una sola cita por su ID junto con los nombres de su mascota y dueño mediante LEFT JOIN.
-// Se utiliza para rellenar los campos en ActualizarCita.html.
 function obtenerCitaPorId(int $id): ?array
 {
     $conexion = obtenerConexion();
@@ -66,6 +65,19 @@ function obtenerCitaPorId(int $id): ?array
     return $cita ?: null;
 }
 
+// diegoCar09: Elimina una cita por su ID y devuelve true si se borró el registro.
+function eliminarCita(int $id): bool
+{
+    $conexion = obtenerConexion();
+    $consulta = $conexion->prepare('DELETE FROM cita WHERE ID_Cita = ?');
+    $consulta->bind_param('i', $id);
+    $consulta->execute();
+    $eliminado = $consulta->affected_rows > 0;
+    $consulta->close();
+
+    return $eliminado;
+}
+
 // diegoCar09: Genera e imprime una tabla HTML reutilizable a partir de un arreglo de encabezados y filas.
 function imprimirTabla(array $encabezados, array $filas, string $mensajeVacio)
 {
@@ -83,7 +95,6 @@ function imprimirTabla(array $encabezados, array $filas, string $mensajeVacio)
     {
         echo '<tr class="fila-mensaje"><td colspan="' . count($encabezados) . '">' . escaparDato($mensajeVacio) . '</td></tr>';
     } 
-    
     else 
     {
         // Crea una fila por cada elemento y escapa cada celda antes de imprimirla.
@@ -122,17 +133,14 @@ function imprimirDetalleCita(int $id)
     }
 
     // 2. Consulta los datos completos de la mascota vinculada a la cita.
-    $consulta = $conexion->prepare('SELECT ID_Mascota, Nombre, Genero, Especie, Raza, Peso, FechaDeNacimiento, Estado FROM mascota
-     WHERE ID_Mascota = ?');
+    $consulta = $conexion->prepare('SELECT ID_Mascota, Nombre, Genero, Especie, Raza, Peso, FechaDeNacimiento, Estado FROM mascota WHERE ID_Mascota = ?');
     $consulta->bind_param('i', $cita['ID_Mascota']);
     $consulta->execute();
     $mascotas = $consulta->get_result()->fetch_all(MYSQLI_ASSOC);
     $consulta->close();
 
     // 3. Consulta los datos completos del dueño vinculado a la cita.
-    $consulta = $conexion->prepare(
-        'SELECT ID_Dueno, Nombre, Apellidos, Telefono, CorreoElectronico, Direccion, Ciudad FROM dueno WHERE ID_Dueno = ?'
-    );
+    $consulta = $conexion->prepare('SELECT ID_Dueno, Nombre, Apellidos, Telefono, CorreoElectronico, Direccion, Ciudad FROM dueno WHERE ID_Dueno = ?');
     $consulta->bind_param('i', $cita['ID_Dueno']);
     $consulta->execute();
     $duenos = $consulta->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -194,12 +202,11 @@ function imprimirDetalleCita(int $id)
     );
 }
 
-// diegoCar09: Endpoint POST que elimina una cita después de la confirmación del usuario en IndexCita.html.
+// diegoCar09: Endpoint POST que recibe el fetch de IndexCita.html para eliminar una cita.
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['accion'] ?? '') === 'eliminar') 
 {
     header('Content-Type: application/json; charset=UTF-8');
 
-    // Valida que el ID recibido sea un número entero positivo.
     $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
 
     if ($id === false || $id === null) 
@@ -211,27 +218,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['accion'] ?? '') === 'elimi
 
     try 
     {
-        $conexion = obtenerConexion();
-        // Ejecuta el borrado seguro mediante consulta preparada.
-        $consulta = $conexion->prepare('DELETE FROM cita WHERE ID_Cita = ?');
-        $consulta->bind_param('i', $id);
-        $consulta->execute();
-        // Verifica si efectivamente se borró al menos una fila.
-        $eliminado = $consulta->affected_rows > 0;
-        $consulta->close();
-
-        if ($eliminado) 
+        if (eliminarCita($id)) 
         {
             echo json_encode(['exito' => true, 'mensaje' => 'Cita eliminada correctamente.']);
         } 
-        
         else 
         {
             http_response_code(404);
             echo json_encode(['exito' => false, 'mensaje' => 'No se encontró la cita para eliminar.']);
         }
     } 
-    
     catch (mysqli_sql_exception $error) 
     {
         error_log('Error al eliminar la cita: ' . $error->getMessage());
