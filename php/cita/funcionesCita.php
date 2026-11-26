@@ -1,19 +1,11 @@
 <?php //Por: Diego Carballo
-// Abre y devuelve la conexión directa con MySQL sin depender de un archivo externo.
+require_once __DIR__ . '/../conexion.php';
+
+// Devuelve la conexión compartida configurada para el resto del sistema.
 function obtenerConexion()
 {
-    $host = 'localhost';
-    $usuario = 'root';
-    $contrasena = '';
-    $baseDatos = 'veterinaria_pola_y_mani'; // Verifica que coincida con el nombre en phpMyAdmin
-
-    // Activa el modo estricto para que los errores de SQL lancen excepciones capturables con try-catch.
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-    $conexion = new mysqli($host, $usuario, $contrasena, $baseDatos);
-    // Configura la codificación UTF-8 completa para soportar acentos y caracteres especiales.
-    $conexion->set_charset('utf8mb4');
-
-    return $conexion;
+    return Database::getinstancia()->getConnection();
 }
 
 // Convierte los valores de la base de datos en texto seguro para insertarlo en HTML (previene ataques XSS).
@@ -33,7 +25,7 @@ function obtenerCitas()
 {
     $conexion = obtenerConexion();
 
-    $sql = 'SELECT ID_Cita, ID_Mascota, ID_Dueno, Fecha, Hora, Estado FROM Cita ORDER BY Fecha, Hora, ID_Cita';
+    $sql = 'SELECT ID_Cita, ID_Mascota, ID_Dueno, Fecha, Hora, Estado FROM cita ORDER BY Fecha, Hora, ID_Cita';
     $consulta = $conexion->prepare($sql);
     $citas = [];
     $consulta->execute();
@@ -46,7 +38,6 @@ function obtenerCitas()
     }
 
     $consulta->close();
-    $conexion->close();
 
     return $citas;
 }
@@ -59,9 +50,9 @@ function obtenerCitaPorId(int $id): ?array
 
     $sql = 'SELECT C.ID_Cita, C.ID_Mascota, C.ID_Dueno, C.Fecha, C.Hora, C.Estado, M.Nombre AS NombreMascota, M.Especie, M.Raza,
                    D.Nombre AS NombreDueno, D.Apellidos AS ApellidosDueno, D.Telefono
-            FROM Cita AS C
-            LEFT JOIN Mascota AS M ON M.ID_Mascota = C.ID_Mascota
-            LEFT JOIN Dueno AS D ON D.ID_Dueno = C.ID_Dueno
+            FROM cita AS C
+            LEFT JOIN mascota AS M ON M.ID_Mascota = C.ID_Mascota
+            LEFT JOIN dueno AS D ON D.ID_Dueno = C.ID_Dueno
             WHERE C.ID_Cita = ?';
 
     $consulta = $conexion->prepare($sql);
@@ -71,7 +62,6 @@ function obtenerCitaPorId(int $id): ?array
     $cita = $consulta->get_result()->fetch_assoc();
 
     $consulta->close();
-    $conexion->close();
 
     return $cita ?: null;
 }
@@ -128,7 +118,6 @@ function imprimirDetalleCita(int $id)
     {
         http_response_code(404);
         echo '<p class="fila-mensaje" role="alert">No se encontró una cita con ese ID.</p>';
-        $conexion->close();
         return;
     }
 
@@ -148,7 +137,6 @@ function imprimirDetalleCita(int $id)
     $consulta->execute();
     $duenos = $consulta->get_result()->fetch_all(MYSQLI_ASSOC);
     $consulta->close();
-    $conexion->close();
 
     // Construye e imprime la tabla vertical con la información de la cita.
     echo '<h2>Información de la cita</h2>';
@@ -231,7 +219,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['accion'] ?? '') === 'elimi
         // Verifica si efectivamente se borró al menos una fila.
         $eliminado = $consulta->affected_rows > 0;
         $consulta->close();
-        $conexion->close();
 
         if ($eliminado) 
         {

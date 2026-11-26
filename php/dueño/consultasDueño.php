@@ -21,7 +21,7 @@ function obtenerDuenos()
     $conexion = Database::getinstancia()->getConnection();
 
     // Gael: Recupera los campos que aparecen como columnas en IndexDueño.php.
-    $sql = 'SELECT ID_Dueno, Nombre, Apellidos, Edad, Telefono, CorreoElectronico, Direccion, Ciudad, FechaDeInscripcion
+    $sql = 'SELECT ID_Dueno, Nombre, Apellido, Telefono, CorreoElectronico
             FROM dueno';
     $consulta = $conexion->prepare($sql);
     $duenos = [];

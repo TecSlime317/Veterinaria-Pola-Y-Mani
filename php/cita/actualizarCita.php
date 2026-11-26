@@ -39,7 +39,6 @@ try
         $consulta->bind_param('sssi', $fecha, $hora, $estado, $id);
         $consulta->execute();
         $consulta->close();
-        $conexion->close();
         
         echo json_encode(['exito' => true, 'mensaje' => 'Cita actualizada correctamente.']);
         exit;
