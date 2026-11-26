@@ -107,7 +107,7 @@ function imprimirDetalleCita(int $id)
     $conexion = obtenerConexion();
 
     // 1. Consulta los datos principales de la cita solicitada.
-    $consulta = $conexion->prepare('SELECT ID_Cita, ID_Mascota, ID_Dueno, Fecha, Hora, Estado FROM Cita WHERE ID_Cita = ?');
+    $consulta = $conexion->prepare('SELECT ID_Cita, ID_Mascota, ID_Dueno, Fecha, Hora, Estado FROM cita WHERE ID_Cita = ?');
     $consulta->bind_param('i', $id);
     $consulta->execute();
     $cita = $consulta->get_result()->fetch_assoc();
@@ -122,7 +122,7 @@ function imprimirDetalleCita(int $id)
     }
 
     // 2. Consulta los datos completos de la mascota vinculada a la cita.
-    $consulta = $conexion->prepare('SELECT ID_Mascota, Nombre, Genero, Especie, Raza, Peso, FechaDeNacimiento, Estado FROM Mascota
+    $consulta = $conexion->prepare('SELECT ID_Mascota, Nombre, Genero, Especie, Raza, Peso, FechaDeNacimiento, Estado FROM mascota
      WHERE ID_Mascota = ?');
     $consulta->bind_param('i', $cita['ID_Mascota']);
     $consulta->execute();
@@ -131,7 +131,7 @@ function imprimirDetalleCita(int $id)
 
     // 3. Consulta los datos completos del dueño vinculado a la cita.
     $consulta = $conexion->prepare(
-        'SELECT ID_Dueno, Nombre, Apellidos, Telefono, CorreoElectronico, Direccion, Ciudad FROM Dueno WHERE ID_Dueno = ?'
+        'SELECT ID_Dueno, Nombre, Apellidos, Telefono, CorreoElectronico, Direccion, Ciudad FROM dueno WHERE ID_Dueno = ?'
     );
     $consulta->bind_param('i', $cita['ID_Dueno']);
     $consulta->execute();
@@ -213,7 +213,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['accion'] ?? '') === 'elimi
     {
         $conexion = obtenerConexion();
         // Ejecuta el borrado seguro mediante consulta preparada.
-        $consulta = $conexion->prepare('DELETE FROM Cita WHERE ID_Cita = ?');
+        $consulta = $conexion->prepare('DELETE FROM cita WHERE ID_Cita = ?');
         $consulta->bind_param('i', $id);
         $consulta->execute();
         // Verifica si efectivamente se borró al menos una fila.

@@ -34,7 +34,7 @@ try
         }
         
         $conexion = obtenerConexion();
-        $sql = 'UPDATE Cita SET Fecha = ?, Hora = ?, Estado = ? WHERE ID_Cita = ?';
+        $sql = 'UPDATE cita SET Fecha = ?, Hora = ?, Estado = ? WHERE ID_Cita = ?';
         $consulta = $conexion->prepare($sql);
         $consulta->bind_param('sssi', $fecha, $hora, $estado, $id);
         $consulta->execute();

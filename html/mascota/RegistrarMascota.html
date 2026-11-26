@@ -28,6 +28,11 @@
              No lleva campo ID porque la base de datos lo genera sola. -->
         <form class="formulario" action="../../php/mascota/registrarMascota.php" method="post">
 
+            <div class="campo">
+                <label for="id-dueno">ID del dueño</label>
+                <input type="number" id="id-dueno" name="ID_Dueno" min="1" required>
+            </div>
+
             <!-- Alprox9: Nombre de la mascota (obligatorio). -->
             <div class="campo">
                 <label for="nombre">Nombre</label>
