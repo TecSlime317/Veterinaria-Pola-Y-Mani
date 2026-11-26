@@ -219,9 +219,9 @@ if (isset($_GET['id'])) {
             echo '<td><details><summary>Opciones</summary>';
             $id = rawurlencode((string) $dueno['ID_Dueno']);
             echo '<a class="boton boton-secundario" href="LeerDueño.php?id=' . $id . '">Ver</a>';
-            echo '<a class="boton boton-secundario" href="ActualizarDueño.html?id=' . $id . '">Editar</a>';
-            // tecslime: La eliminación está pendiente de backend, por eso el control se muestra deshabilitado.
-            echo '<button type="button" disabled title="La eliminación todavía no está conectada al servidor">Eliminar</button>';
+            echo '<a class="boton boton-secundario" href="ActualizarDueño.php?id=' . $id . '">Editar</a>';
+            // Lleva a una página que pide confirmación antes de borrar el registro.
+            echo '<a class="boton boton-secundario" href="EliminarDueño.php?id=' . $id . '">Eliminar</a>';
             echo '</details></td>';
             echo '</tr>';
         }

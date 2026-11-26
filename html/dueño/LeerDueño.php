@@ -23,7 +23,6 @@
 
         <!-- tecslime: Regresa al listado, que ahora también se procesa como una página PHP. -->
         <div class="acciones-formulario">
-            <button class="btn btn-primary">
             <a class="boton boton-secundario" href="IndexDueño.php">Volver</a>
         </div>
     </main>
