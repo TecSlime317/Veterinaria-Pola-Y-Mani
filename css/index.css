@@ -22,7 +22,7 @@
     --color-texto-suave: #7a6a58;        /* Alprox9: Texto secundario (notas, campos bloqueados). */
     --color-borde: #e6d3bd;              /* Alprox9: Color de bordes y líneas divisorias. */
     --color-peligro: #c0392b;            /* Alprox9: Rojo para acciones destructivas (eliminar). */
-    --radio: 14px;                       /* Alprox9: Redondeo de esquinas de recuadros. */
+    --radio: 10px;                       /* Alprox9: Redondeo de esquinas de recuadros. */
 }
 
 
